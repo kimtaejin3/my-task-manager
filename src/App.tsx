@@ -1,8 +1,9 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import styled from "@emotion/styled";
-import colors from "./styles/color";
 import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+
+import viteLogo from "/vite.svg";
+import reactLogo from "./assets/react.svg";
+import colors from "./styles/color";
 
 function App() {
   return (
