@@ -19,12 +19,12 @@ export default function Layout({
 
 const Container = styled.div`
   display: flex;
-  padding: 20px 12px 12px 16px;
+  padding: 12px;
   min-height: 100vh;
 `;
 
 const Sidebar = styled.div`
-  width: 240px;
+  width: 296px;
 `;
 
 const Dashboard = styled.div`
