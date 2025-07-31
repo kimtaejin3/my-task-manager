@@ -3,19 +3,21 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { getBoardListQueryOptions } from "../queryOptions";
 
-import { BoardTitle, NavigationButton } from "./sidebar";
+import { BoardTitle } from "./sidebar";
+import SidebarButton from "./sidebar-button";
 
-export default function BoardList() {
+export default function SidebarBoardButtonList() {
   const { data: boardList } = useSuspenseQuery(getBoardListQueryOptions());
-
   return (
     <BoardListContainer>
       {boardList.map((item) => (
         <li key={item.name}>
-          <NavigationButton>
-            <EmojiContainer bgColor={item.color}>{item.emoji}</EmojiContainer>
-            <BoardTitle>{item.name}</BoardTitle>
-          </NavigationButton>
+          <SidebarButton
+            left={
+              <EmojiContainer bgColor={item.color}>{item.emoji}</EmojiContainer>
+            }
+            content={<BoardTitle>{item.name}</BoardTitle>}
+          />
         </li>
       ))}
     </BoardListContainer>
@@ -37,3 +39,14 @@ const EmojiContainer = styled.div<{ bgColor: string }>`
   justify-content: center;
   align-items: center;
 `;
+
+// const NavigationButton = styled.button`
+//   box-sizing: border-box;
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+//   padding: 8px;
+//   border-radius: 46px;
+//   align-items: center;
+// `;

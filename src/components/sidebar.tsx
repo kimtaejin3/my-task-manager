@@ -9,9 +9,10 @@ import closeRound from "../assets/svgs/close-round.svg";
 import colors from "../styles/color";
 import typography from "../styles/font";
 
-import BoardList from "./board-list";
 import Error from "./error";
-import Loading from "./Loading";
+import Loading from "./loading";
+import SidebarBoardButtonList from "./sidebar-board-button-list";
+import SidebarButton from "./sidebar-button";
 
 export default function Sidebar() {
   return (
@@ -26,14 +27,14 @@ export default function Sidebar() {
           }
         >
           <Suspense fallback={<Loading />}>
-            <BoardList />
+            <SidebarBoardButtonList />
           </Suspense>
         </ErrorBoundary>
       </Navigation>
-      <NavigationButton>
-        <img src={addRoundFill} alt="add" />
-        <BoardTitle>Add new board</BoardTitle>
-      </NavigationButton>
+      <SidebarButton
+        left={<img src={addRoundFill} alt="add" />}
+        content={<BoardTitle>Add new board</BoardTitle>}
+      />
     </Container>
   );
 }
@@ -56,17 +57,6 @@ const CloseButton = styled.button`
 
 const Navigation = styled.nav`
   margin: 36px 0 12px;
-`;
-
-export const NavigationButton = styled.button`
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px;
-  border-radius: 46px;
-  align-items: center;
 `;
 
 export const BoardTitle = styled.span`
