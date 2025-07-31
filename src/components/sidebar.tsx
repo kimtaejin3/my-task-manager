@@ -20,19 +20,16 @@ export default function Sidebar() {
         <img src={closeRound} alt="close" />
       </CloseButton>
       <Navigation>
-        <NavigationList>
-          <ErrorBoundary
-            fallback={
-              <Error errorMessage="Board 데이터를 불러오는중 문제가 발생했어요." />
-            }
-          >
-            <Suspense fallback={<Loading />}>
-              <BoardList />
-            </Suspense>
-          </ErrorBoundary>
-        </NavigationList>
+        <ErrorBoundary
+          fallback={
+            <Error errorMessage="Board 데이터를 불러오는중 문제가 발생했어요." />
+          }
+        >
+          <Suspense fallback={<Loading />}>
+            <BoardList />
+          </Suspense>
+        </ErrorBoundary>
       </Navigation>
-      {/* TODO: Navigation Button 공통 컴포넌트화 */}
       <NavigationButton>
         <img src={addRoundFill} alt="add" />
         <BoardTitle>Add new board</BoardTitle>
@@ -59,12 +56,6 @@ const CloseButton = styled.button`
 
 const Navigation = styled.nav`
   margin: 36px 0 12px;
-`;
-
-const NavigationList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
 `;
 
 export const NavigationButton = styled.button`

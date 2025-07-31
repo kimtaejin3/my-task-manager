@@ -9,7 +9,7 @@ export default function BoardList() {
   const { data: boardList } = useSuspenseQuery(getBoardListQueryOptions());
 
   return (
-    <>
+    <BoardListContainer>
       {boardList.map((item) => (
         <li key={item.name}>
           <NavigationButton>
@@ -18,9 +18,15 @@ export default function BoardList() {
           </NavigationButton>
         </li>
       ))}
-    </>
+    </BoardListContainer>
   );
 }
+
+const BoardListContainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
 
 const EmojiContainer = styled.div<{ bgColor: string }>`
   width: 32px;
