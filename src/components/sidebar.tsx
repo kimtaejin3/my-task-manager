@@ -4,15 +4,14 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import styled from "@emotion/styled";
 
-import addRoundFill from "../assets/svgs/add-round-fill.svg";
 import closeRound from "../assets/svgs/close-round.svg";
 import colors from "../styles/color";
 import typography from "../styles/font";
 
+import AddBoard from "./add-board";
+import BoardNavigation from "./board-navigation";
 import Error from "./error";
 import Loading from "./loading";
-import SidebarBoardButtonList from "./sidebar-board-button-list";
-import SidebarButton from "./sidebar-button";
 
 export default function Sidebar() {
   return (
@@ -27,14 +26,11 @@ export default function Sidebar() {
           }
         >
           <Suspense fallback={<Loading />}>
-            <SidebarBoardButtonList />
+            <BoardNavigation />
           </Suspense>
         </ErrorBoundary>
+        <AddBoard />
       </Navigation>
-      <SidebarButton
-        left={<img src={addRoundFill} alt="add" />}
-        content={<BoardTitle>Add new board</BoardTitle>}
-      />
     </Container>
   );
 }
@@ -57,8 +53,4 @@ const CloseButton = styled.button`
 
 const Navigation = styled.nav`
   margin: 36px 0 12px;
-`;
-
-export const BoardTitle = styled.span`
-  margin-bottom: -3px;
 `;
