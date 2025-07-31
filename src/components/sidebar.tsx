@@ -1,3 +1,7 @@
+import { Suspense } from "react";
+
+import { ErrorBoundary } from "react-error-boundary";
+
 import styled from "@emotion/styled";
 
 import addRoundFill from "../assets/svgs/add-round-fill.svg";
@@ -5,23 +9,9 @@ import closeRound from "../assets/svgs/close-round.svg";
 import colors from "../styles/color";
 import typography from "../styles/font";
 
-const navItems = [
-  {
-    name: "Simple Card Board",
-    emoji: "🛠️",
-    color: colors.greenLight,
-  },
-  {
-    name: "Frontend Board",
-    emoji: "⚙️",
-    color: colors.blueLight,
-  },
-  {
-    name: "Design Board",
-    emoji: "🚀",
-    color: colors.redLight,
-  },
-];
+import BoardList from "./board-list";
+import Error from "./error";
+import Loading from "./Loading";
 
 export default function Sidebar() {
   return (
@@ -29,22 +19,20 @@ export default function Sidebar() {
       <CloseButton>
         <img src={closeRound} alt="close" />
       </CloseButton>
-
       <Navigation>
         <NavigationList>
-          {navItems.map((item) => (
-            <li key={item.name}>
-              <NavigationButton>
-                <EmojiContainer bgColor={item.color}>
-                  {item.emoji}
-                </EmojiContainer>
-                <BoardTitle>{item.name}</BoardTitle>
-              </NavigationButton>
-            </li>
-          ))}
+          <ErrorBoundary
+            fallback={
+              <Error errorMessage="Board 데이터를 불러오는중 문제가 발생했어요." />
+            }
+          >
+            <Suspense fallback={<Loading />}>
+              <BoardList />
+            </Suspense>
+          </ErrorBoundary>
         </NavigationList>
       </Navigation>
-
+      {/* TODO: Navigation Button 공통 컴포넌트화 */}
       <NavigationButton>
         <img src={addRoundFill} alt="add" />
         <BoardTitle>Add new board</BoardTitle>
@@ -79,7 +67,7 @@ const NavigationList = styled.ul`
   gap: 12px;
 `;
 
-const NavigationButton = styled.button`
+export const NavigationButton = styled.button`
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -90,16 +78,6 @@ const NavigationButton = styled.button`
   align-items: center;
 `;
 
-const EmojiContainer = styled.div<{ bgColor: string }>`
-  width: 32px;
-  height: 32px;
-  background-color: ${(props) => props.bgColor};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const BoardTitle = styled.span`
+export const BoardTitle = styled.span`
   margin-bottom: -3px;
 `;
