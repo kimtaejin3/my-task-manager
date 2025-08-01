@@ -1,11 +1,19 @@
 import Dashboard from "./components/dashboard/dashboard";
 import Layout from "./components/layout/layout";
-import SidebarWithContext from "./components/sidebar/sidebar-with-context";
+import Sidebar from "./components/sidebar/sidebar";
+import { SidebarProvider } from "./context/SidebarContext";
 
 function App() {
   return (
     <>
-      <Layout sidebar={<SidebarWithContext />} dashboard={<Dashboard />} />
+      <Layout
+        sidebar={
+          <SidebarProvider>
+            <Sidebar />
+          </SidebarProvider>
+        }
+        dashboard={<Dashboard />}
+      />
     </>
   );
 }
