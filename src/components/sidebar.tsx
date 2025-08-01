@@ -4,21 +4,21 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import styled from "@emotion/styled";
 
-import closeRound from "../assets/svgs/close-round.svg";
-import colors from "../styles/color";
+import { useSidebar } from "../context/SidebarContext";
 import typography from "../styles/font";
 
-import AddBoard from "./add-board";
+import AddNewBoard from "./add-new-board";
 import BoardNavigation from "./board-navigation";
 import Error from "./error";
 import Loading from "./loading";
+import ToggleButton from "./toggle-button";
 
 export default function Sidebar() {
+  const { isSidebarOpen } = useSidebar();
+
   return (
-    <Container>
-      <CloseButton>
-        <img src={closeRound} alt="close" />
-      </CloseButton>
+    <Container isSidebarOpen={isSidebarOpen}>
+      <ToggleButton />
       <Navigation>
         <ErrorBoundary
           fallback={
@@ -29,26 +29,18 @@ export default function Sidebar() {
             <BoardNavigation />
           </Suspense>
         </ErrorBoundary>
-        <AddBoard />
+        <AddNewBoard />
       </Navigation>
     </Container>
   );
 }
 
-const Container = styled.aside`
+const Container = styled.aside<{ isSidebarOpen: boolean }>`
   padding: 8px 12px 0px 4px;
   ${typography.bold14};
-  line-height: 1;
-`;
 
-const CloseButton = styled.button`
-  width: 40px;
-  height: 40px;
-  background-color: ${colors.darkTertiary};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: ${(props) => (props.isSidebarOpen ? "296px" : "75px")};
+  transition: all 0.3s ease-in-out;
 `;
 
 const Navigation = styled.nav`

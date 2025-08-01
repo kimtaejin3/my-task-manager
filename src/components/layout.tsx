@@ -24,7 +24,7 @@ const Container = styled.div`
 `;
 
 const Sidebar = styled.div`
-  width: 296px;
+  width: fit-content;
 `;
 
 const Dashboard = styled.div`

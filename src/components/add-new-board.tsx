@@ -4,7 +4,7 @@ import addRoundFill from "../assets/svgs/add-round-fill.svg";
 
 import SidebarButton from "./sidebar-button";
 
-export default function AddBoard() {
+export default function AddNewBoard() {
   return (
     <Container>
       <SidebarButton
