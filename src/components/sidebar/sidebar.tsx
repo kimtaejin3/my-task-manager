@@ -19,19 +19,23 @@ export default function Sidebar() {
 
   return (
     <SidebarContainer isSidebarOpen={isSidebarOpen}>
-      <SidebarVisibilityToggle />
-      <Navigation>
-        <ErrorBoundary
-          fallback={
-            <Error errorMessage="Board 데이터를 불러오는중 문제가 발생했어요." />
-          }
-        >
-          <Suspense fallback={<Loading />}>
-            <BoardNavigation />
-          </Suspense>
-        </ErrorBoundary>
-        <AddNewBoard />
-      </Navigation>
+      <Header>
+        <SidebarVisibilityToggle />
+      </Header>
+      <Main>
+        <Navigation>
+          <ErrorBoundary
+            fallback={
+              <Error errorMessage="Board 데이터를 불러오는중 문제가 발생했어요." />
+            }
+          >
+            <Suspense fallback={<Loading />}>
+              <BoardNavigation />
+            </Suspense>
+          </ErrorBoundary>
+          <AddNewBoard />
+        </Navigation>
+      </Main>
       <Footer>
         <ThemeToggle />
       </Footer>
@@ -50,6 +54,10 @@ const SidebarContainer = styled.aside<{ isSidebarOpen: boolean }>`
   display: flex;
   flex-direction: column;
 `;
+
+const Header = styled.header``;
+
+const Main = styled.main``;
 
 const Navigation = styled.nav`
   margin: 36px 0 12px;
