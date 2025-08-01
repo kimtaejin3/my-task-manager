@@ -1,4 +1,4 @@
-import { SidebarProvider } from "../context/SidebarContext";
+import { SidebarProvider } from "../../context/SidebarContext";
 
 import Sidebar from "./sidebar";
 

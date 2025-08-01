@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import { useSidebar } from "../context/SidebarContext";
+import { useSidebar } from "../../context/SidebarContext";
 
 interface Props {
   onClick?: () => void;

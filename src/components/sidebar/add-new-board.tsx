@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import addRoundFill from "../assets/svgs/add-round-fill.svg";
+import addRoundFill from "../../assets/svgs/add-round-fill.svg";
 
 import SidebarButton from "./sidebar-button";
 

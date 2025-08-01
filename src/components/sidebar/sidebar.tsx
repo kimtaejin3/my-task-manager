@@ -4,13 +4,13 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import styled from "@emotion/styled";
 
-import { useSidebar } from "../context/SidebarContext";
-import typography from "../styles/font";
+import { useSidebar } from "../../context/SidebarContext";
+import typography from "../../styles/font";
+import Error from "../shared/error";
+import Loading from "../shared/loading";
 
 import AddNewBoard from "./add-new-board";
 import BoardNavigation from "./board-navigation";
-import Error from "./error";
-import Loading from "./loading";
 import ToggleButton from "./toggle-button";
 
 export default function Sidebar() {

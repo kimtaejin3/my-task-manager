@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { getBoardListQueryOptions } from "../queryOptions";
+import { getBoardListQueryOptions } from "../../queryOptions";
 
 import SidebarButton from "./sidebar-button";
 

@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 
-import closeRound from "../assets/svgs/close-round.svg";
-import menu from "../assets/svgs/menu.svg";
-import { useSidebar } from "../context/SidebarContext";
-import colors from "../styles/color";
+import closeRound from "../../assets/svgs/close-round.svg";
+import menu from "../../assets/svgs/menu.svg";
+import { useSidebar } from "../../context/SidebarContext";
+import colors from "../../styles/color";
 
 export default function ToggleButton() {
   const { isSidebarOpen, toggleSidebar } = useSidebar();

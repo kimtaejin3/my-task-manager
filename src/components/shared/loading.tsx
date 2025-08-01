@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import colors from "../styles/color";
+import colors from "../../styles/color";
 
 export default function Loading() {
   return (
