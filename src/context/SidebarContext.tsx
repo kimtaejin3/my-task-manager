@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type SidebarContextType = {
   isSidebarOpen: boolean;
@@ -26,10 +26,33 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+const MOBILE_BREAKPOINT = 640;
+
 export function useSidebar() {
   const context = useContext(SidebarContext);
+
   if (!context) {
     throw new Error("useSidebar must be used within a SidebarProvider");
   }
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= MOBILE_BREAKPOINT) {
+        context.setIsSidebarOpen(false);
+        return;
+      }
+
+      if (window.innerWidth > MOBILE_BREAKPOINT) {
+        context.setIsSidebarOpen(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [context]);
+
   return context;
 }

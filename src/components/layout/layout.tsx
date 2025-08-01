@@ -1,7 +1,5 @@
 import styled from "@emotion/styled";
 
-import colors from "../../styles/color";
-
 export default function Layout({
   sidebar,
   dashboard,
@@ -28,7 +26,7 @@ const Sidebar = styled.div`
 `;
 
 const Dashboard = styled.div`
-  background-color: ${colors.darkSecondary};
+  background-color: ${(props) => props.theme.themeValue.secondary};
   border-radius: 12px;
   padding: 12px 16px;
   flex-grow: 1;

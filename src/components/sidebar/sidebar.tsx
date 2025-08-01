@@ -11,14 +11,15 @@ import Loading from "../shared/loading";
 
 import AddNewBoard from "./add-new-board";
 import BoardNavigation from "./board-navigation";
-import ToggleButton from "./toggle-button";
+import SidebarVisibilityToggle from "./sidebar-visibility-toggle";
+import ThemeToggle from "./theme-toggle";
 
 export default function Sidebar() {
   const { isSidebarOpen } = useSidebar();
 
   return (
     <Container isSidebarOpen={isSidebarOpen}>
-      <ToggleButton />
+      <SidebarVisibilityToggle />
       <Navigation>
         <ErrorBoundary
           fallback={
@@ -31,6 +32,9 @@ export default function Sidebar() {
         </ErrorBoundary>
         <AddNewBoard />
       </Navigation>
+      <Footer>
+        <ThemeToggle />
+      </Footer>
     </Container>
   );
 }
@@ -41,8 +45,16 @@ const Container = styled.aside<{ isSidebarOpen: boolean }>`
 
   width: ${(props) => (props.isSidebarOpen ? "296px" : "75px")};
   transition: all 0.3s ease-in-out;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Navigation = styled.nav`
   margin: 36px 0 12px;
+`;
+
+const Footer = styled.footer`
+  margin-top: auto;
 `;

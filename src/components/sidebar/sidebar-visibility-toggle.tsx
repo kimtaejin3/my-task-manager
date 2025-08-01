@@ -3,9 +3,8 @@ import styled from "@emotion/styled";
 import closeRound from "../../assets/svgs/close-round.svg";
 import menu from "../../assets/svgs/menu.svg";
 import { useSidebar } from "../../context/SidebarContext";
-import colors from "../../styles/color";
 
-export default function ToggleButton() {
+export default function SidebarVisibilityToggle() {
   const { isSidebarOpen, toggleSidebar } = useSidebar();
 
   return (
@@ -18,7 +17,7 @@ export default function ToggleButton() {
 const Container = styled.button<{ isSidebarOpen: boolean }>`
   width: 40px;
   height: 40px;
-  background-color: ${colors.darkTertiary};
+  background-color: ${(props) => props.theme.themeValue.secondary};
   border-radius: 50%;
   display: flex;
   justify-content: center;
