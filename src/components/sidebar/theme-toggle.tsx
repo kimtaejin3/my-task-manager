@@ -33,6 +33,7 @@ const Container = styled.div`
   padding: 4px;
   border-radius: 12px;
   display: flex;
+  background-color: ${(props) => props.theme.themeValue.secondary};
 `;
 
 const ThemeButton = styled.button<{ isActive: boolean }>`
@@ -46,6 +47,5 @@ const ThemeButton = styled.button<{ isActive: boolean }>`
   gap: 10px;
   cursor: pointer;
   background-color: ${(props) =>
-    props.isActive ? props.theme.themeValue.secondary : "inherit"};
-  transition: background-color 0.1s ease-in-out;
+    props.isActive ? props.theme.themeValue.primary : "inherit"};
 `;
