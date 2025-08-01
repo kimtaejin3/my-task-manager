@@ -4,13 +4,13 @@ import colors from "../../styles/color";
 
 export default function Loading() {
   return (
-    <LoaderContainer>
+    <LoadingContainer>
       <ColorChangingSpinner />
-    </LoaderContainer>
+    </LoadingContainer>
   );
 }
 
-const LoaderContainer = styled.div`
+const LoadingContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;

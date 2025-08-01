@@ -6,15 +6,15 @@ import SidebarButton from "./sidebar-button";
 
 export default function AddNewBoard() {
   return (
-    <Container>
+    <AddNewBoardContainer>
       <SidebarButton
         left={<img src={addRoundFill} alt="add" />}
         content={<span>Add new board</span>}
       />
-    </Container>
+    </AddNewBoardContainer>
   );
 }
 
-const Container = styled.div`
+const AddNewBoardContainer = styled.div`
   margin-top: 12px;
 `;

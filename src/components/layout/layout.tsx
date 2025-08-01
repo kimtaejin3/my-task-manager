@@ -8,14 +8,14 @@ export default function Layout({
   dashboard: React.ReactNode;
 }) {
   return (
-    <Container>
+    <LayoutContainer>
       <Sidebar>{sidebar}</Sidebar>
       <Dashboard>{dashboard}</Dashboard>
-    </Container>
+    </LayoutContainer>
   );
 }
 
-const Container = styled.div`
+const LayoutContainer = styled.div`
   display: flex;
   padding: 12px;
   min-height: 100vh;

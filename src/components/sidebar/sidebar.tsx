@@ -18,7 +18,7 @@ export default function Sidebar() {
   const { isSidebarOpen } = useSidebar();
 
   return (
-    <Container isSidebarOpen={isSidebarOpen}>
+    <SidebarContainer isSidebarOpen={isSidebarOpen}>
       <SidebarVisibilityToggle />
       <Navigation>
         <ErrorBoundary
@@ -35,11 +35,11 @@ export default function Sidebar() {
       <Footer>
         <ThemeToggle />
       </Footer>
-    </Container>
+    </SidebarContainer>
   );
 }
 
-const Container = styled.aside<{ isSidebarOpen: boolean }>`
+const SidebarContainer = styled.aside<{ isSidebarOpen: boolean }>`
   padding: 8px 12px 0px 4px;
   ${typography.bold14};
 

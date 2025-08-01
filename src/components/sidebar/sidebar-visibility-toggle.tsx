@@ -8,13 +8,18 @@ export default function SidebarVisibilityToggle() {
   const { isSidebarOpen, toggleSidebar } = useSidebar();
 
   return (
-    <Container onClick={toggleSidebar} isSidebarOpen={isSidebarOpen}>
+    <SidebarVisibilityToggleContainer
+      onClick={toggleSidebar}
+      isSidebarOpen={isSidebarOpen}
+    >
       <img src={isSidebarOpen ? closeRound : menu} alt="toggle" />
-    </Container>
+    </SidebarVisibilityToggleContainer>
   );
 }
 
-const Container = styled.button<{ isSidebarOpen: boolean }>`
+const SidebarVisibilityToggleContainer = styled.button<{
+  isSidebarOpen: boolean;
+}>`
   width: 40px;
   height: 40px;
   background-color: ${(props) => props.theme.themeValue.secondary};
