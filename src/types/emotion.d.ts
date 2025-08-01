@@ -1,9 +1,9 @@
 import "@emotion/react";
+import type { ThemeType } from "./themeType";
 
-type ThemeType = {
-  //Todo: dark | light
-  changeTheme: (theme: "dark" | "light") => void;
-  themeType: "dark" | "light";
+type ExtendedTheme = {
+  changeTheme: (theme: ThemeType) => void;
+  themeType: ThemeType;
   themeValue: {
     primary: string;
     secondary: string;
@@ -12,5 +12,5 @@ type ThemeType = {
 };
 
 declare module "@emotion/react" {
-  export interface Theme extends ThemeType {}
+  export interface Theme extends ExtendedTheme {}
 }
