@@ -1,27 +1,22 @@
-import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
-import Icon from "../shared/icon";
+import { useSidebar } from "../../context/SidebarContext";
 
-import ThemeButton from "./theme-button";
+import ThemeButtonForMobile from "./theme-button-for-mobile";
+import ThemeButtonsForDesktop from "./theme-buttons-for-desktop";
 
 export default function ThemeToggle() {
-  const theme = useTheme();
+  const { isSidebarOpen } = useSidebar();
 
   return (
     <ThemeToggleContainer>
-      <ThemeButton
-        onClick={() => theme.changeTheme("light")}
-        isActive={theme.themeType === "light"}
-        icon={<Icon type="sun" size={16} />}
-        text="Light"
-      />
-      <ThemeButton
-        onClick={() => theme.changeTheme("dark")}
-        isActive={theme.themeType === "dark"}
-        icon={<Icon type="moon" size={16} />}
-        text="Dark"
-      />
+      {(() => {
+        if (!isSidebarOpen) {
+          return <ThemeButtonForMobile />;
+        }
+
+        return <ThemeButtonsForDesktop />;
+      })()}
     </ThemeToggleContainer>
   );
 }
