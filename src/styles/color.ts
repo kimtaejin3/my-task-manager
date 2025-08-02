@@ -8,15 +8,21 @@ const colors = {
 
   // Blue colors
   bluePrimary: "#253985",
+  blueMiddle: "#70A3F3",
   blueLight: "#DEE9FC",
 
   // Yellow colors
   yellowPrimary: "#C18D30",
+  yellowMiddle: "#F3CE49",
   yellowLight: "#FDF9C9",
 
   // Green colors
   greenPrimary: "#285231",
+  greenMiddle: "#77DB89",
   greenLight: "#E2FBE8",
+
+  // Purple colors
+  purplePrimary: "#B787F5",
 };
 
 export default colors;

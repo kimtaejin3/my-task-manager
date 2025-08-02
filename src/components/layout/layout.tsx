@@ -30,4 +30,5 @@ const Dashboard = styled.div`
   border-radius: 12px;
   padding: 12px 16px;
   flex-grow: 1;
+  overflow-x: auto;
 `;

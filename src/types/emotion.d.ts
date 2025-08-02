@@ -1,5 +1,5 @@
 import "@emotion/react";
-import type { ThemeType } from "./themeType";
+import type { ThemeType } from "./theme-type";
 
 type ExtendedTheme = {
   changeTheme: (theme: ThemeType) => void;
