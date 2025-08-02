@@ -1,8 +1,7 @@
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
-import moon from "../../assets/svgs/moon-fill.svg";
-import sun from "../../assets/svgs/sun-fill.svg";
+import Icon from "../shared/icon";
 
 import ThemeButton from "./theme-button";
 
@@ -14,13 +13,13 @@ export default function ThemeToggle() {
       <ThemeButton
         onClick={() => theme.changeTheme("light")}
         isActive={theme.themeType === "light"}
-        icon={<img width={16} height={16} src={sun} alt="sun" />}
+        icon={<Icon type="sun" size={16} />}
         text="Light"
       />
       <ThemeButton
         onClick={() => theme.changeTheme("dark")}
         isActive={theme.themeType === "dark"}
-        icon={<img width={16} height={16} src={moon} alt="moon" />}
+        icon={<Icon type="moon" size={16} />}
         text="Dark"
       />
     </ThemeToggleContainer>

@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 
-import closeRound from "../../assets/svgs/close-round.svg";
-import menu from "../../assets/svgs/menu.svg";
 import { useSidebar } from "../../context/SidebarContext";
+import Icon from "../shared/icon";
 
 export default function SidebarVisibilityToggle() {
   const { isSidebarOpen, toggleSidebar } = useSidebar();
@@ -12,7 +11,7 @@ export default function SidebarVisibilityToggle() {
       onClick={toggleSidebar}
       isSidebarOpen={isSidebarOpen}
     >
-      <img src={isSidebarOpen ? closeRound : menu} alt="toggle" />
+      <Icon type={isSidebarOpen ? "close" : "menu"} size={24} />
     </SidebarVisibilityToggleContainer>
   );
 }

@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { getBoardListQueryOptions } from "../../queryOptions";
+import { boardListQueryOptions } from "../../queryOptions";
 
 import SidebarButton from "./sidebar-button";
 
 export default function BoardNavigation() {
-  const { data: boardList } = useSuspenseQuery(getBoardListQueryOptions());
+  const { data: boardList } = useSuspenseQuery(boardListQueryOptions);
   return (
     <nav>
       <NavigationList>
