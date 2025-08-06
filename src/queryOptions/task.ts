@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { getTaskList } from "../remote/task";
+import { getTaskList } from "../remotes/task";
 
 export const taskListQueryOptions = queryOptions({
   queryKey: ["task-list"],

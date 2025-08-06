@@ -4,7 +4,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import styled from "@emotion/styled";
 
-import { useSidebar } from "../../context/SidebarContext";
+import { useSidebar } from "../../contexts/SidebarContext";
 import typography from "../../styles/font";
 import Error from "../shared/error";
 import Loading from "../shared/loading";

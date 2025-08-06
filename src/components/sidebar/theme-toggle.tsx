@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import { useSidebar } from "../../context/SidebarContext";
+import { useSidebar } from "../../contexts/SidebarContext";
 
 import ThemeButtonForMobile from "./theme-button-for-mobile";
 import ThemeButtonsForDesktop from "./theme-buttons-for-desktop";

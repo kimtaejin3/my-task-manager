@@ -10,4 +10,9 @@ type Task = {
 
 type GroupedTasks = Record<StatusCategoryType, Task[]>;
 
-export type { StatusCategoryType, Task, GroupedTasks };
+type TaskStatusConfig = {
+  color: string;
+  title: string;
+};
+
+export type { StatusCategoryType, Task, GroupedTasks, TaskStatusConfig };
