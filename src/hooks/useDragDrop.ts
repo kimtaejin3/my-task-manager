@@ -1,38 +1,34 @@
-import { useState } from "react";
-
-import { groupBy } from "es-toolkit";
-
-import type { GroupedTasks, StatusCategoryType, Task } from "../types/task";
 import type { DropResult } from "@hello-pangea/dnd";
 
-export default function useTaskDragDrop({ taskList }: { taskList: Task[] }) {
-  const taskListByStatus: GroupedTasks = groupBy(
-    taskList,
-    (item) => item.status
-  );
-  const [columns, setColumns] = useState(taskListByStatus);
+interface UseTaskDragDropProps {
+  onUpdateStatus: (
+    sourceStatus: {
+      index: number;
+      droppableId: string;
+    },
+    destinationStatus: {
+      index: number;
+      droppableId: string;
+    }
+  ) => void;
+}
 
-  const handleDragEnd = ({ result }: { result: DropResult<string> }) => {
+export function useTaskDragDrop({ onUpdateStatus }: UseTaskDragDropProps) {
+  const handleDragEnd = ({ result }: { result: DropResult }) => {
     if (!result.destination) return;
 
-    const sourceTasks =
-      columns[result.source.droppableId as StatusCategoryType];
-    const [removed] = sourceTasks.splice(result.source.index, 1);
+    const sourceStatus = {
+      index: result.source.index,
+      droppableId: result.source.droppableId,
+    };
 
-    const destTasks =
-      columns[result.destination.droppableId as StatusCategoryType];
-    destTasks.splice(result.destination.index, 0, removed);
+    const destinationStatus = {
+      index: result.destination.index,
+      droppableId: result.destination.droppableId,
+    };
 
-    setColumns({
-      ...columns,
-      [result.source.droppableId]: sourceTasks,
-      [result.destination.droppableId]: destTasks,
-    });
+    onUpdateStatus(sourceStatus, destinationStatus);
   };
 
-  return {
-    columns,
-    setColumns,
-    handleDragEnd,
-  };
+  return { handleDragEnd };
 }

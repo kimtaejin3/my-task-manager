@@ -1,17 +1,12 @@
-import { Suspense, useState, type SetStateAction } from "react";
+import { Suspense } from "react";
 
 import styled from "@emotion/styled";
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  type DropResult,
-} from "@hello-pangea/dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { groupBy } from "es-toolkit";
 
 import { TASK_STATUS_CONFIG } from "../../constants/task-status";
-import useTaskDragDrop from "../../hooks/useDragDrop";
+import { useTaskDragDrop } from "../../hooks/useDragDrop";
+import { useTaskColumns } from "../../hooks/useTaskStatus";
 import { taskListQueryOptions } from "../../queryOptions/task";
 import typography from "../../styles/font";
 
@@ -31,8 +26,10 @@ export default function Dashboard() {
 function DashboardWrapper() {
   const { data } = useSuspenseQuery(taskListQueryOptions);
 
-  const { columns, handleDragEnd } = useTaskDragDrop({
-    taskList: data,
+  const { columns, updateTaskStatus } = useTaskColumns(data);
+
+  const { handleDragEnd } = useTaskDragDrop({
+    onUpdateStatus: updateTaskStatus,
   });
 
   return (
