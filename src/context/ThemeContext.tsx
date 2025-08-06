@@ -4,7 +4,7 @@ import { ThemeProvider, type Theme } from "@emotion/react";
 
 import { darkTheme, lightTheme } from "../styles/theme";
 
-import type { ThemeType } from "../types/themeType";
+import type { ThemeType } from "../types/theme-type";
 
 const prefersDarkMode = window.matchMedia(
   "(prefers-color-scheme: dark)"

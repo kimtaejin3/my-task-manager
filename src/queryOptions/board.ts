@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { getBoardList } from "../remote/board-list";
+import { getBoardList } from "../remote/board";
 
 export const boardListQueryOptions = queryOptions({
   queryKey: ["board-list"],
