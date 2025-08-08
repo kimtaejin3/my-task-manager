@@ -28,7 +28,7 @@ const Sidebar = styled.div`
 const Dashboard = styled.div`
   background-color: ${(props) => props.theme.themeValue.secondary};
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 16px 12px;
   flex-grow: 1;
   overflow-x: auto;
 `;

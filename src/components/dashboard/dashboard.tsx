@@ -103,7 +103,7 @@ const DashboardContainer = styled.div`
 const TaskList = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
+  margin-top: 20px;
   padding: 0 4px;
   width: 380px;
   height: 100%;
@@ -125,6 +125,5 @@ const ColumnHeader = styled.header`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 12px;
   ${typography.bold14}
 `;
