@@ -7,34 +7,67 @@ import typography from "../../styles/font";
 
 import type { Task } from "../../types/task";
 
-export default React.memo(function TaskCard({
+interface TaskCardProps extends Task {
+  id: number;
+}
+
+//TODO: 임시객체, 서버 로직 변경함에 따라 제거 예정
+
+const TAG_NAME_COLOR_MAP = {
+  concept: {
+    backgroundColor: colors.redLight,
+    textColor: colors.redPrimary,
+  },
+  technical: {
+    backgroundColor: colors.blueLight,
+    textColor: colors.bluePrimary,
+  },
+  design: {
+    backgroundColor: colors.yellowLight,
+    textColor: colors.yellowPrimary,
+  },
+  "front-end": {
+    backgroundColor: colors.greenLight,
+    textColor: colors.greenPrimary,
+  },
+};
+
+type TagName = keyof typeof TAG_NAME_COLOR_MAP;
+
+export default function TaskCard({
   id,
   title,
   tags,
   background,
-}: {
-  id: number;
-} & Task) {
+}: TaskCardProps) {
   return (
     <Card id={String(id)}>
-      {background && (
-        <BackgroundImage>
-          <img src={background} alt="" />
-        </BackgroundImage>
-      )}
       <Content>
+        {background && (
+          <BackgroundImage>
+            <img src={background} alt="" />
+          </BackgroundImage>
+        )}
         <Title>{title}</Title>
         {tags.length > 0 && (
           <TagList>
             {tags.map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
+              <Tag
+                key={tag}
+                textColor={TAG_NAME_COLOR_MAP[tag as TagName].textColor}
+                backgroundColor={
+                  TAG_NAME_COLOR_MAP[tag as TagName].backgroundColor
+                }
+              >
+                {tag}
+              </Tag>
             ))}
           </TagList>
         )}
       </Content>
     </Card>
   );
-});
+}
 
 const Card = styled.div`
   background: #fff;
@@ -48,6 +81,8 @@ const BackgroundImage = styled.div`
   width: 100%;
   height: 130px;
   overflow: hidden;
+  margin-bottom: 12px;
+  border-radius: 12px;
 
   img {
     width: 100%;
@@ -62,7 +97,6 @@ const Content = styled.div`
 
 const Title = styled.h3`
   ${typography.medium14}
-  color: ${colors.gray};
   margin: 0 0 8px 0;
 `;
 
@@ -72,10 +106,13 @@ const TagList = styled.div`
   gap: 4px;
 `;
 
-const Tag = styled.span`
+const Tag = styled.span<{
+  textColor: string;
+  backgroundColor: string;
+}>`
   ${typography.medium12}
-  color: ${colors.gray};
-  background: ${colors.gray};
+  color: ${(props) => props.textColor};
+  background-color: ${(props) => props.backgroundColor};
   padding: 2px 8px;
   border-radius: 4px;
 `;
