@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 
+import { ErrorBoundary } from "react-error-boundary";
+
 import styled from "@emotion/styled";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -9,6 +11,7 @@ import { useTaskDragDrop } from "../../hooks/useDragDrop";
 import { useTaskColumns } from "../../hooks/useTaskStatus";
 import { taskListQueryOptions } from "../../queryOptions/task";
 import typography from "../../styles/font";
+import Error from "../shared/error";
 
 import TaskCard from "./task-card";
 
@@ -17,9 +20,15 @@ import type { Entries } from "../../types/utils";
 
 export default function Dashboard() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <DashboardWrapper />
-    </Suspense>
+    <ErrorBoundary
+      fallback={
+        <Error errorMessage="Task List 데이터를 불러오는중 문제가 발생했어요." />
+      }
+    >
+      <Suspense fallback={<div>Loading...</div>}>
+        <DashboardWrapper />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
