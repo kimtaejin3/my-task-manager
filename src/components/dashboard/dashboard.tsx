@@ -103,7 +103,6 @@ const DashboardContainer = styled.div`
 const TaskList = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
   padding: 0 4px;
   width: 380px;
   height: 100%;
@@ -112,6 +111,7 @@ const TaskList = styled.div`
 const Column = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 20px;
 `;
 
 const ColorBox = styled.div<{ color: string }>`
