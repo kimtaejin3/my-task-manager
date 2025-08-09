@@ -23,6 +23,13 @@ const colors = {
 
   // Purple colors
   purplePrimary: "#B787F5",
+
+  // Neutral / surface colors (from previous theme hardcodes)
+  white: "#FFFFFF",
+  slate900: "#191B1F", // near-black text/background
+  slate800: "#2A2D32", // dark surface
+  ivory: "#FEF7EE", // light text on dark
+  blueSurface: "#F0F6FE", // light surface used in light theme
 };
 
 export default colors;

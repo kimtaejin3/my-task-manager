@@ -1,11 +1,13 @@
+import colors from "./color";
+
 export const lightTheme = {
-  primary: "#FFF",
-  secondary: "#F0F6FE",
-  text: "#191B1F",
+  primary: colors.white,
+  secondary: colors.blueSurface,
+  text: colors.slate900,
 };
 
 export const darkTheme = {
-  primary: "#191B1F",
-  secondary: "#2A2D32",
-  text: "#FEF7EE",
+  primary: colors.slate900,
+  secondary: colors.slate800,
+  text: colors.ivory,
 };

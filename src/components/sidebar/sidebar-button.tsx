@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 import { useSidebar } from "../../contexts/SidebarContext";
 
-interface Props {
+interface SidebarButtonProps {
   onClick?: () => void;
   left?: React.ReactNode;
   content?: React.ReactNode;
@@ -14,7 +14,7 @@ export default function SidebarButton({
   left,
   content,
   right,
-}: Props) {
+}: SidebarButtonProps) {
   const { isSidebarOpen } = useSidebar();
 
   return (

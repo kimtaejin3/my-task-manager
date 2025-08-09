@@ -9,36 +9,6 @@ interface TaskCardProps extends Task {
   id: number;
 }
 
-const get_tag_name_color_map = (tag_name: string) => {
-  switch (tag_name) {
-    case "concept":
-      return {
-        backgroundColor: colors.redLight,
-        textColor: colors.redPrimary,
-      };
-    case "technical":
-      return {
-        backgroundColor: colors.blueLight,
-        textColor: colors.bluePrimary,
-      };
-    case "design":
-      return {
-        backgroundColor: colors.yellowLight,
-        textColor: colors.yellowPrimary,
-      };
-    case "front-end":
-      return {
-        backgroundColor: colors.greenLight,
-        textColor: colors.greenPrimary,
-      };
-    default:
-      return {
-        backgroundColor: "#f0f0f0", // Default background color
-        textColor: "#333", // Default text color
-      };
-  }
-};
-
 export default function TaskCard({
   id,
   title,
@@ -124,3 +94,33 @@ const Tag = styled.span<{
   padding: 2px 8px;
   border-radius: 4px;
 `;
+
+const get_tag_name_color_map = (tag_name: string) => {
+  switch (tag_name) {
+    case "concept":
+      return {
+        backgroundColor: colors.redLight,
+        textColor: colors.redPrimary,
+      };
+    case "technical":
+      return {
+        backgroundColor: colors.blueLight,
+        textColor: colors.bluePrimary,
+      };
+    case "design":
+      return {
+        backgroundColor: colors.yellowLight,
+        textColor: colors.yellowPrimary,
+      };
+    case "front-end":
+      return {
+        backgroundColor: colors.greenLight,
+        textColor: colors.greenPrimary,
+      };
+    default:
+      return {
+        backgroundColor: "#f0f0f0", // Default background color
+        textColor: "#333", // Default text color
+      };
+  }
+};
