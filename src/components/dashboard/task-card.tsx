@@ -5,18 +5,13 @@ import typography from "../../styles/font";
 
 import type { Task } from "../../types/task";
 
-interface TaskCardProps extends Task {
-  id: number;
-}
+interface TaskCardProps extends Task {}
 
-export default function TaskCard({
-  id,
-  title,
-  tags,
-  background,
-}: TaskCardProps) {
+export default function TaskCard(task: TaskCardProps) {
+  const { title, tags, background } = task;
+
   return (
-    <Card id={String(id)}>
+    <Card>
       <Content>
         {background && (
           <BackgroundImage>
