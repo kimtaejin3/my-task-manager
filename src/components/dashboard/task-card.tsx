@@ -1,5 +1,3 @@
-import React from "react";
-
 import styled from "@emotion/styled";
 
 import colors from "../../styles/color";
@@ -11,28 +9,35 @@ interface TaskCardProps extends Task {
   id: number;
 }
 
-//TODO: 임시객체, 서버 로직 변경함에 따라 제거 예정
-
-const TAG_NAME_COLOR_MAP = {
-  concept: {
-    backgroundColor: colors.redLight,
-    textColor: colors.redPrimary,
-  },
-  technical: {
-    backgroundColor: colors.blueLight,
-    textColor: colors.bluePrimary,
-  },
-  design: {
-    backgroundColor: colors.yellowLight,
-    textColor: colors.yellowPrimary,
-  },
-  "front-end": {
-    backgroundColor: colors.greenLight,
-    textColor: colors.greenPrimary,
-  },
+const get_tag_name_color_map = (tag_name: string) => {
+  switch (tag_name) {
+    case "concept":
+      return {
+        backgroundColor: colors.redLight,
+        textColor: colors.redPrimary,
+      };
+    case "technical":
+      return {
+        backgroundColor: colors.blueLight,
+        textColor: colors.bluePrimary,
+      };
+    case "design":
+      return {
+        backgroundColor: colors.yellowLight,
+        textColor: colors.yellowPrimary,
+      };
+    case "front-end":
+      return {
+        backgroundColor: colors.greenLight,
+        textColor: colors.greenPrimary,
+      };
+    default:
+      return {
+        backgroundColor: "#f0f0f0", // Default background color
+        textColor: "#333", // Default text color
+      };
+  }
 };
-
-type TagName = keyof typeof TAG_NAME_COLOR_MAP;
 
 export default function TaskCard({
   id,
@@ -51,17 +56,20 @@ export default function TaskCard({
         <Title>{title}</Title>
         {tags.length > 0 && (
           <TagList>
-            {tags.map((tag) => (
-              <Tag
-                key={tag}
-                textColor={TAG_NAME_COLOR_MAP[tag as TagName].textColor}
-                backgroundColor={
-                  TAG_NAME_COLOR_MAP[tag as TagName].backgroundColor
-                }
-              >
-                {tag}
-              </Tag>
-            ))}
+            {tags.map((tag) => {
+              const { textColor, backgroundColor } =
+                get_tag_name_color_map(tag);
+
+              return (
+                <Tag
+                  key={tag}
+                  textColor={textColor}
+                  backgroundColor={backgroundColor}
+                >
+                  {tag}
+                </Tag>
+              );
+            })}
           </TagList>
         )}
       </Content>
