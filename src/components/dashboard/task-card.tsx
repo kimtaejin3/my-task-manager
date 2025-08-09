@@ -48,7 +48,7 @@ export default function TaskCard({
 }
 
 const Card = styled.div`
-  background: #fff;
+  background: ${(props) => props.theme.themeValue.primary};
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   overflow: hidden;
