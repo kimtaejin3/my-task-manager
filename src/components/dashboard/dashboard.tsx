@@ -98,6 +98,7 @@ const DashboardContainer = styled.div`
   display: flex;
   gap: 12px;
   height: 100%;
+  overflow-y: auto;
 `;
 
 const TaskList = styled.div`

@@ -18,7 +18,7 @@ export default function Layout({
 const LayoutContainer = styled.div`
   display: flex;
   padding: 12px;
-  min-height: 100vh;
+  height: 100vh;
 `;
 
 const Sidebar = styled.div`
@@ -30,5 +30,4 @@ const Dashboard = styled.div`
   border-radius: 12px;
   padding: 16px 12px;
   flex-grow: 1;
-  overflow-x: auto;
 `;
