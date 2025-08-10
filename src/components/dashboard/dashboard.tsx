@@ -42,7 +42,7 @@ function DashboardWrapper() {
   });
 
   return (
-    <DashboardContainer>
+    <DashboardWrapperContainer>
       <DragDropContext onDragEnd={(result) => handleDragEnd({ result })}>
         {(Object.entries(columns) as Entries<GroupedTasks>).map(
           ([statusCategory, tasks]) => (
@@ -90,22 +90,22 @@ function DashboardWrapper() {
           )
         )}
       </DragDropContext>
-    </DashboardContainer>
+    </DashboardWrapperContainer>
   );
 }
 
-const DashboardContainer = styled.div`
+const DashboardWrapperContainer = styled.div`
   display: flex;
   gap: 12px;
   height: 100%;
-  overflow-y: auto;
+  overflow-x: auto;
 `;
 
 const TaskList = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 4px;
-  width: 380px;
+  width: 370px;
   height: 100%;
 `;
 

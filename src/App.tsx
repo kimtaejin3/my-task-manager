@@ -36,6 +36,7 @@ const DashboardContainer = styled.div`
   border-radius: 12px;
   padding: 16px 12px;
   flex-grow: 1;
+  min-width: 0;
 `;
 
 export default App;
