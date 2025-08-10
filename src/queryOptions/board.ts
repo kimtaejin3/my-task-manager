@@ -4,5 +4,5 @@ import { getBoardList } from "../remotes/board";
 
 export const boardListQueryOptions = queryOptions({
   queryKey: ["board-list"],
-  queryFn: getBoardList,
+  queryFn: () => getBoardList,
 });

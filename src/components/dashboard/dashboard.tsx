@@ -15,7 +15,7 @@ import Error from "../shared/error";
 
 import TaskCard from "./task-card";
 
-import type { GroupedTasks } from "../../types/task";
+import type { TasksByStatus } from "../../types/task";
 import type { Entries } from "../../types/utils";
 
 export default function Dashboard() {
@@ -44,7 +44,7 @@ function DashboardWrapper() {
   return (
     <DashboardWrapperContainer>
       <DragDropContext onDragEnd={(result) => handleDragEnd({ result })}>
-        {(Object.entries(columns) as Entries<GroupedTasks>).map(
+        {(Object.entries(columns) as Entries<TasksByStatus>).map(
           ([statusCategory, tasks]) => (
             <Column>
               <ColumnHeader>

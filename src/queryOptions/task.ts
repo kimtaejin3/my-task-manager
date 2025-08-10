@@ -4,7 +4,7 @@ import { getTaskList } from "../remotes/task";
 
 export const taskListQueryOptions = queryOptions({
   queryKey: ["task-list"],
-  queryFn: getTaskList,
+  queryFn: () => getTaskList,
   select: (data) => {
     return data.tasks;
   },

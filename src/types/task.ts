@@ -1,18 +1,13 @@
-type StatusCategoryType = "backlog" | "in-progress" | "in-review" | "completed";
+type Status = "backlog" | "in-progress" | "in-review" | "completed";
 
 type Task = {
   id: number;
   title: string;
-  status: StatusCategoryType;
+  status: Status;
   background: string | null;
   tags: string[];
 };
 
-type GroupedTasks = Record<StatusCategoryType, Task[]>;
+type TasksByStatus = Record<Status, Task[]>;
 
-type TaskStatusConfig = {
-  color: string;
-  title: string;
-};
-
-export type { StatusCategoryType, Task, GroupedTasks, TaskStatusConfig };
+export type { Status, Task, TasksByStatus };
