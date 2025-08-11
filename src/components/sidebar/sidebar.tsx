@@ -48,6 +48,7 @@ const SidebarContainer = styled.aside<{ isSidebarOpen: boolean }>`
   ${typography.bold14};
 
   width: ${(props) => (props.isSidebarOpen ? "296px" : "75px")};
+  flex-shrink: 0;
   transition: all 0.3s ease-in-out;
 
   height: 100%;

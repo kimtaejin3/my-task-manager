@@ -18,21 +18,23 @@ import TaskCard from "./task-card";
 import type { TasksByStatus } from "../../types/task";
 import type { Entries } from "../../types/utils";
 
-export default function Dashboard() {
+export default function KanbanBoardContainer() {
   return (
-    <ErrorBoundary
-      fallback={
-        <Error errorMessage="Task List 데이터를 불러오는중 문제가 발생했어요." />
-      }
-    >
-      <Suspense fallback={<div>Loading...</div>}>
-        <DashboardWrapper />
-      </Suspense>
-    </ErrorBoundary>
+    <S.Container>
+      <ErrorBoundary
+        fallback={
+          <Error errorMessage="Task List 데이터를 불러오는중 문제가 발생했어요." />
+        }
+      >
+        <Suspense fallback={<div>Loading...</div>}>
+          <KanbanBoard />
+        </Suspense>
+      </ErrorBoundary>
+    </S.Container>
   );
 }
 
-function DashboardWrapper() {
+function KanbanBoard() {
   const { data } = useSuspenseQuery(taskListQueryOptions);
 
   const { columns, updateTaskStatus } = useTaskColumns(data);
@@ -42,20 +44,20 @@ function DashboardWrapper() {
   });
 
   return (
-    <DashboardWrapperContainer>
+    <S.Flex>
       <DragDropContext onDragEnd={(result) => handleDragEnd({ result })}>
         {(Object.entries(columns) as Entries<TasksByStatus>).map(
           ([statusCategory, tasks]) => (
-            <Column>
-              <ColumnHeader>
-                <ColorBox color={TASK_STATUS_CONFIG[statusCategory].color} />
+            <S.Column>
+              <S.ColumnHeader>
+                <S.ColorBox color={TASK_STATUS_CONFIG[statusCategory].color} />
                 <span>
                   {TASK_STATUS_CONFIG[statusCategory].title} ({tasks.length})
                 </span>
-              </ColumnHeader>
+              </S.ColumnHeader>
               <Droppable key={statusCategory} droppableId={statusCategory}>
                 {(provided) => (
-                  <TaskList
+                  <S.TaskList
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
@@ -83,48 +85,57 @@ function DashboardWrapper() {
                       </Draggable>
                     ))}
                     {provided.placeholder}
-                  </TaskList>
+                  </S.TaskList>
                 )}
               </Droppable>
-            </Column>
+            </S.Column>
           )
         )}
       </DragDropContext>
-    </DashboardWrapperContainer>
+    </S.Flex>
   );
 }
 
-const DashboardWrapperContainer = styled.div`
-  display: flex;
-  gap: 12px;
-  height: 100%;
-  overflow-x: auto;
-`;
+const S = {
+  Container: styled.div`
+    background-color: ${(props) => props.theme.themeValue.secondary};
+    border-radius: 12px;
+    padding: 16px 12px;
+    flex-grow: 1;
+    min-width: 0;
+  `,
 
-const TaskList = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 4px;
-  width: 370px;
-  height: 100%;
-`;
+  Flex: styled.div`
+    display: flex;
+    gap: 12px;
+    height: 100%;
+    overflow-x: auto;
+  `,
 
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
+  TaskList: styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 370px;
+    height: 100%;
+  `,
 
-const ColorBox = styled.div<{ color: string }>`
-  width: 8px;
-  height: 8px;
-  background-color: ${(props) => props.color};
-  border-radius: 50%;
-`;
+  Column: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  `,
 
-const ColumnHeader = styled.header`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  ${typography.bold14}
-`;
+  ColorBox: styled.div<{ color: string }>`
+    width: 8px;
+    height: 8px;
+    background-color: ${(props) => props.color};
+    border-radius: 50%;
+  `,
+
+  ColumnHeader: styled.header`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    ${typography.bold14}
+  `,
+};
