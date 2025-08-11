@@ -3,17 +3,15 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import styled from "@emotion/styled";
-import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { DragDropContext } from "@hello-pangea/dnd";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { TASK_STATUS_CONFIG } from "../../constants/task-status";
 import { useTaskDragDrop } from "../../hooks/useDragDrop";
 import { useTaskColumns } from "../../hooks/useTaskStatus";
 import { taskListQueryOptions } from "../../queryOptions/task";
-import typography from "../../styles/font";
 import Error from "../shared/error";
 
-import TaskCard from "./task-card";
+import TaskColumn from "./task-column";
 
 import type { TasksByStatus } from "../../types/task";
 import type { Entries } from "../../types/utils";
@@ -44,55 +42,15 @@ function KanbanBoard() {
   });
 
   return (
-    <S.Flex>
+    <S.KanbanBoard>
       <DragDropContext onDragEnd={(result) => handleDragEnd({ result })}>
         {(Object.entries(columns) as Entries<TasksByStatus>).map(
-          ([statusCategory, tasks]) => (
-            <S.Column>
-              <S.ColumnHeader>
-                <S.ColorBox color={TASK_STATUS_CONFIG[statusCategory].color} />
-                <span>
-                  {TASK_STATUS_CONFIG[statusCategory].title} ({tasks.length})
-                </span>
-              </S.ColumnHeader>
-              <Droppable key={statusCategory} droppableId={statusCategory}>
-                {(provided) => (
-                  <S.TaskList
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                  >
-                    {tasks.map((task, index) => (
-                      <Draggable
-                        key={String(task.id)}
-                        draggableId={String(task.id)}
-                        index={index}
-                      >
-                        {(provided) => {
-                          return (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              style={{
-                                ...provided.draggableProps.style,
-                                margin: "0 0 12px 0",
-                              }}
-                            >
-                              <TaskCard {...task} />
-                            </div>
-                          );
-                        }}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </S.TaskList>
-                )}
-              </Droppable>
-            </S.Column>
+          ([status, tasks]) => (
+            <TaskColumn key={status} status={status} tasks={tasks} />
           )
         )}
       </DragDropContext>
-    </S.Flex>
+    </S.KanbanBoard>
   );
 }
 
@@ -105,37 +63,10 @@ const S = {
     min-width: 0;
   `,
 
-  Flex: styled.div`
+  KanbanBoard: styled.div`
     display: flex;
     gap: 12px;
     height: 100%;
     overflow-x: auto;
-  `,
-
-  TaskList: styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 370px;
-    height: 100%;
-  `,
-
-  Column: styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  `,
-
-  ColorBox: styled.div<{ color: string }>`
-    width: 8px;
-    height: 8px;
-    background-color: ${(props) => props.color};
-    border-radius: 50%;
-  `,
-
-  ColumnHeader: styled.header`
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    ${typography.bold14}
   `,
 };
