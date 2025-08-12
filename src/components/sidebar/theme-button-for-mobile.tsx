@@ -7,7 +7,7 @@ export default function ThemeButtonForMobile() {
   const theme = useTheme();
 
   return (
-    <ThemeButtonForMobileContainer
+    <Container
       onClick={() =>
         theme.changeTheme(theme.themeType === "light" ? "dark" : "light")
       }
@@ -22,11 +22,11 @@ export default function ThemeButtonForMobile() {
             theme.themeType satisfies never;
         }
       })()}
-    </ThemeButtonForMobileContainer>
+    </Container>
   );
 }
 
-const ThemeButtonForMobileContainer = styled.button`
+const Container = styled.button`
   width: 100%;
   display: flex;
   justify-content: center;

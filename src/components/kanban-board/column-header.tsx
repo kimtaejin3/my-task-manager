@@ -14,12 +14,12 @@ export default function ColumnHeader({
   color,
 }: ColumnHeaderProps) {
   return (
-    <S.Header>
+    <S.Flex>
       <S.ColorBox color={color} />
       <span>
         {title} ({count})
       </span>
-    </S.Header>
+    </S.Flex>
   );
 }
 
@@ -31,7 +31,7 @@ const S = {
     border-radius: 50%;
   `,
 
-  Header: styled.header`
+  Flex: styled.div`
     display: flex;
     align-items: center;
     gap: 8px;

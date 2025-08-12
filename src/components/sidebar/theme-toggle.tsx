@@ -9,7 +9,7 @@ export default function ThemeToggle() {
   const { isSidebarOpen } = useSidebar();
 
   return (
-    <ThemeToggleContainer>
+    <S.Container>
       {(() => {
         if (!isSidebarOpen) {
           return <ThemeButtonForMobile />;
@@ -17,14 +17,16 @@ export default function ThemeToggle() {
 
         return <ThemeButtonsForDesktop />;
       })()}
-    </ThemeToggleContainer>
+    </S.Container>
   );
 }
 
-const ThemeToggleContainer = styled.div`
-  width: 100%;
-  padding: 4px;
-  border-radius: 12px;
-  display: flex;
-  background-color: ${(props) => props.theme.themeValue.secondary};
-`;
+const S = {
+  Container: styled.div`
+    width: 100%;
+    padding: 4px;
+    border-radius: 12px;
+    display: flex;
+    background-color: ${(props) => props.theme.themeValue.secondary};
+  `,
+};

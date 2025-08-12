@@ -9,36 +9,38 @@ export default function BoardNavigation() {
   const { data: boardList } = useSuspenseQuery(boardListQueryOptions);
   return (
     <nav>
-      <NavigationList>
+      <S.NavigationList>
         {boardList.map((item) => (
           <li key={item.name}>
             <SidebarButton
               left={
-                <EmojiContainer bgColor={item.color}>
+                <S.EmojiContainer bgColor={item.color}>
                   {item.emoji}
-                </EmojiContainer>
+                </S.EmojiContainer>
               }
-              content={<span>{item.name}</span>}
+              center={<span>{item.name}</span>}
             />
           </li>
         ))}
-      </NavigationList>
+      </S.NavigationList>
     </nav>
   );
 }
 
-const NavigationList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
+const S = {
+  NavigationList: styled.ul`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  `,
 
-const EmojiContainer = styled.div<{ bgColor: string }>`
-  width: 32px;
-  height: 32px;
-  background-color: ${(props) => props.bgColor};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+  EmojiContainer: styled.div<{ bgColor: string }>`
+    width: 32px;
+    height: 32px;
+    background-color: ${(props) => props.bgColor};
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+};

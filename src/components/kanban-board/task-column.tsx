@@ -15,7 +15,7 @@ interface TaskColumnProps {
 
 export default function TaskColumn({ status, tasks }: TaskColumnProps) {
   return (
-    <S.Column>
+    <S.Flex>
       <ColumnHeader
         title={TASK_STATUS_CONFIG[status].title}
         count={tasks.length}
@@ -31,7 +31,7 @@ export default function TaskColumn({ status, tasks }: TaskColumnProps) {
           </S.TaskList>
         )}
       </Droppable>
-    </S.Column>
+    </S.Flex>
   );
 }
 
@@ -43,7 +43,7 @@ const S = {
     height: 100%;
   `,
 
-  Column: styled.div`
+  Flex: styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;

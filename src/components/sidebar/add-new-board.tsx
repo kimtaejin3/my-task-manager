@@ -6,15 +6,17 @@ import SidebarButton from "./sidebar-button";
 
 export default function AddNewBoard() {
   return (
-    <AddNewBoardContainer>
+    <S.Container>
       <SidebarButton
         left={<Icon type="add" size={16} />}
-        content={<span>Add new board</span>}
+        center={<span>Add new board</span>}
       />
-    </AddNewBoardContainer>
+    </S.Container>
   );
 }
 
-const AddNewBoardContainer = styled.div`
-  margin-top: 12px;
-`;
+const S = {
+  Container: styled.div`
+    margin-top: 12px;
+  `,
+};

@@ -42,7 +42,7 @@ function KanbanBoard() {
   });
 
   return (
-    <S.KanbanBoard>
+    <S.Grid>
       <DragDropContext onDragEnd={(result) => handleDragEnd({ result })}>
         {(Object.entries(columns) as Entries<TasksByStatus>).map(
           ([status, tasks]) => (
@@ -50,7 +50,7 @@ function KanbanBoard() {
           )
         )}
       </DragDropContext>
-    </S.KanbanBoard>
+    </S.Grid>
   );
 }
 
@@ -63,8 +63,9 @@ const S = {
     min-width: 0;
   `,
 
-  KanbanBoard: styled.div`
-    display: flex;
+  Grid: styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 12px;
     height: 100%;
     overflow-x: auto;

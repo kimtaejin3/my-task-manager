@@ -18,12 +18,12 @@ export default function Sidebar() {
   const { isSidebarOpen } = useSidebar();
 
   return (
-    <SidebarContainer isSidebarOpen={isSidebarOpen}>
-      <Header>
+    <S.Container isSidebarOpen={isSidebarOpen}>
+      <S.Header>
         <SidebarVisibilityToggle />
-      </Header>
-      <Main>
-        <Navigation>
+      </S.Header>
+      <S.Main>
+        <S.Navigation>
           <ErrorBoundary
             fallback={
               <Error errorMessage="Board 데이터를 불러오는중 문제가 발생했어요." />
@@ -34,36 +34,38 @@ export default function Sidebar() {
             </Suspense>
           </ErrorBoundary>
           <AddNewBoard />
-        </Navigation>
-      </Main>
-      <Footer>
+        </S.Navigation>
+      </S.Main>
+      <S.Footer>
         <ThemeToggle />
-      </Footer>
-    </SidebarContainer>
+      </S.Footer>
+    </S.Container>
   );
 }
 
-const SidebarContainer = styled.aside<{ isSidebarOpen: boolean }>`
-  padding: 8px 12px 0px 4px;
-  ${typography.bold14};
+const S = {
+  Container: styled.aside<{ isSidebarOpen: boolean }>`
+    padding: 8px 12px 0px 4px;
+    ${typography.bold14};
 
-  width: ${(props) => (props.isSidebarOpen ? "296px" : "75px")};
-  flex-shrink: 0;
-  transition: all 0.3s ease-in-out;
+    width: ${(props) => (props.isSidebarOpen ? "296px" : "75px")};
+    flex-shrink: 0;
+    transition: all 0.3s ease-in-out;
 
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  `,
 
-const Header = styled.header``;
+  Header: styled.header``,
 
-const Main = styled.main``;
+  Main: styled.main``,
 
-const Navigation = styled.nav`
-  margin: 36px 0 12px;
-`;
+  Navigation: styled.nav`
+    margin: 36px 0 12px;
+  `,
 
-const Footer = styled.footer`
-  margin-top: auto;
-`;
+  Footer: styled.footer`
+    margin-top: auto;
+  `,
+};

@@ -11,86 +11,88 @@ export default function TaskCard(task: TaskCardProps) {
   const { title, tags, background } = task;
 
   return (
-    <Card>
-      <Content>
+    <S.Card>
+      <S.Content>
         {background && (
-          <BackgroundImage>
+          <S.BackgroundImage>
             <img src={background} alt="" />
-          </BackgroundImage>
+          </S.BackgroundImage>
         )}
-        <Title>{title}</Title>
+        <S.Title>{title}</S.Title>
         {tags.length > 0 && (
-          <TagList>
+          <S.TagList>
             {tags.map((tag) => {
               const { textColor, backgroundColor } =
                 get_tag_name_color_map(tag);
 
               return (
-                <Tag
+                <S.Tag
                   key={tag}
                   textColor={textColor}
                   backgroundColor={backgroundColor}
                 >
                   {tag}
-                </Tag>
+                </S.Tag>
               );
             })}
-          </TagList>
+          </S.TagList>
         )}
-      </Content>
-    </Card>
+      </S.Content>
+    </S.Card>
   );
 }
 
-const Card = styled.div`
-  background: ${(props) => props.theme.themeValue.primary};
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-  cursor: pointer;
-`;
+const S = {
+  Card: styled.div`
+    background: ${(props) => props.theme.themeValue.primary};
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    cursor: pointer;
+  `,
 
-const BackgroundImage = styled.div`
-  width: 100%;
-  height: 130px;
-  overflow: hidden;
-  margin-bottom: 12px;
-  border-radius: 12px;
-
-  img {
+  BackgroundImage: styled.div`
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
+    height: 130px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    border-radius: 12px;
 
-const Content = styled.div`
-  padding: 12px;
-`;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  `,
 
-const Title = styled.h3`
-  ${typography.medium14}
-  margin: 0 0 8px 0;
-`;
+  Content: styled.div`
+    padding: 12px;
+  `,
 
-const TagList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-`;
+  Title: styled.h3`
+    ${typography.medium14}
+    margin: 0 0 8px 0;
+  `,
 
-const Tag = styled.span<{
-  textColor: string;
-  backgroundColor: string;
-}>`
-  ${typography.medium12}
-  color: ${(props) => props.textColor};
-  background-color: ${(props) => props.backgroundColor};
-  padding: 2px 8px;
-  border-radius: 4px;
-`;
+  TagList: styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  `,
 
-const get_tag_name_color_map = (tag_name: string) => {
+  Tag: styled.span<{
+    textColor: string;
+    backgroundColor: string;
+  }>`
+    ${typography.medium12}
+    color: ${(props) => props.textColor};
+    background-color: ${(props) => props.backgroundColor};
+    padding: 2px 8px;
+    border-radius: 4px;
+  `,
+};
+
+function get_tag_name_color_map(tag_name: string) {
   switch (tag_name) {
     case "concept":
       return {
@@ -114,8 +116,8 @@ const get_tag_name_color_map = (tag_name: string) => {
       };
     default:
       return {
-        backgroundColor: "#f0f0f0", // Default background color
-        textColor: "#333", // Default text color
+        backgroundColor: "#f0f0f0",
+        textColor: "#333",
       };
   }
-};
+}
