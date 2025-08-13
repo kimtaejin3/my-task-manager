@@ -19,16 +19,6 @@ import type { TasksByStatus } from "../../types/task";
 import type { Entries } from "../../types/utils";
 
 export default function KanbanBoardContainer() {
-  const currentBoardId = useAtomValue(currentBoardIdAtom);
-
-  if (currentBoardId === null) {
-    return (
-      <S.Container>
-        <div>사이드바에서 Board를 선택해주세요.</div>
-      </S.Container>
-    );
-  }
-
   return (
     <S.Container>
       <ErrorBoundary
@@ -37,16 +27,18 @@ export default function KanbanBoardContainer() {
         }
       >
         <Suspense fallback={<div>Loading...</div>}>
-          <KanbanBoard currentBoardId={currentBoardId} />
+          <KanbanBoard />
         </Suspense>
       </ErrorBoundary>
     </S.Container>
   );
 }
 
-function KanbanBoard({ currentBoardId }: { currentBoardId: string }) {
+function KanbanBoard() {
+  const currentBoardId = useAtomValue(currentBoardIdAtom);
+
   const { data: tasks } = useSuspenseQuery(
-    taskListQueryOptions(currentBoardId)
+    taskListQueryOptions(currentBoardId ?? "0")
   );
 
   const { columns, updateTaskStatus } = useTaskColumns(tasks);
