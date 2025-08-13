@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useSetAtom } from "jotai";
 
-import { currentBoardIdAtom } from "../../jotai/atom/board";
+import { selectedBoardIdAtom } from "../../jotai/atom/board";
 import { boardListQueryOptions } from "../../queryOptions/board";
 
 import SidebarButton from "./sidebar-button";
@@ -24,14 +24,13 @@ export default function BoardNavigationList() {
 }
 
 function NavigationItem({ board }: { board: Board }) {
-  const setCurrentBoardId = useSetAtom(currentBoardIdAtom);
+  const setSelectedBoardId = useSetAtom(selectedBoardIdAtom);
 
   return (
     <li>
       <SidebarButton
         onClick={() => {
-          console.log("click");
-          setCurrentBoardId(board.id);
+          setSelectedBoardId(board.id);
         }}
         left={
           <S.EmojiContainer bgColor={board.color}>

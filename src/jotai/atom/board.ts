@@ -1,5 +1,5 @@
 import { atom } from "jotai";
 
-const currentBoardIdAtom = atom<string | null>(null);
+const selectedBoardIdAtom = atom<string | null>(null);
 
-export { currentBoardIdAtom };
+export { selectedBoardIdAtom };

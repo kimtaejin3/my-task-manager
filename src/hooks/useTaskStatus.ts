@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { groupBy } from "es-toolkit";
 
 import type { Task, TasksByStatus } from "../types/task";
+import type { DropResult } from "@hello-pangea/dnd";
 
 export function useTaskColumns(initialTasks: Task[]) {
   const initialColumns = useMemo(() => {
@@ -15,16 +16,19 @@ export function useTaskColumns(initialTasks: Task[]) {
     setColumns(initialColumns);
   }, [initialColumns]);
 
-  const updateTaskStatus = (
-    sourceStatus: {
-      index: number;
-      droppableId: string;
-    },
-    destinationStatus: {
-      index: number;
-      droppableId: string;
-    }
-  ) => {
+  const updateTaskStatus = (result: DropResult) => {
+    if (!result.destination) return;
+
+    const sourceStatus = {
+      index: result.source.index,
+      droppableId: result.source.droppableId,
+    };
+
+    const destinationStatus = {
+      index: result.destination.index,
+      droppableId: result.destination.droppableId,
+    };
+
     const sourceDroppableId = sourceStatus.droppableId as keyof TasksByStatus;
     const destinationDroppableId =
       destinationStatus.droppableId as keyof TasksByStatus;

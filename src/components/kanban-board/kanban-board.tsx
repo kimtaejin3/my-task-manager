@@ -7,9 +7,9 @@ import { DragDropContext } from "@hello-pangea/dnd";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 
-import { useTaskDragDrop } from "../../hooks/useDragDrop";
 import { useTaskColumns } from "../../hooks/useTaskStatus";
-import { currentBoardIdAtom } from "../../jotai/atom/board";
+import { selectedBoardIdAtom } from "../../jotai/atom/board";
+import { boardListQueryOptions } from "../../queryOptions/board";
 import { taskListQueryOptions } from "../../queryOptions/task";
 import Error from "../shared/error";
 
@@ -35,21 +35,20 @@ export default function KanbanBoardContainer() {
 }
 
 function KanbanBoard() {
-  const currentBoardId = useAtomValue(currentBoardIdAtom);
+  const selectedBoardId = useAtomValue(selectedBoardIdAtom);
+  const { data: boardList } = useSuspenseQuery(boardListQueryOptions);
+
+  const currentBoardId = selectedBoardId ?? boardList[0].id;
 
   const { data: tasks } = useSuspenseQuery(
-    taskListQueryOptions(currentBoardId ?? "0")
+    taskListQueryOptions(currentBoardId)
   );
 
   const { columns, updateTaskStatus } = useTaskColumns(tasks);
 
-  const { handleDragEnd } = useTaskDragDrop({
-    onUpdateStatus: updateTaskStatus,
-  });
-
   return (
     <S.Grid>
-      <DragDropContext onDragEnd={(result) => handleDragEnd({ result })}>
+      <DragDropContext onDragEnd={(result) => updateTaskStatus(result)}>
         {(Object.entries(columns) as Entries<TasksByStatus>).map(
           ([status, tasks]) => (
             <TaskColumn key={status} status={status} tasks={tasks} />
