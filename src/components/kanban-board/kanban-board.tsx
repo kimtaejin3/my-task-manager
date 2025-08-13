@@ -5,9 +5,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import styled from "@emotion/styled";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 
 import { useTaskDragDrop } from "../../hooks/useDragDrop";
 import { useTaskColumns } from "../../hooks/useTaskStatus";
+import { currentBoardIdAtom } from "../../jotai/atom/board";
 import { taskListQueryOptions } from "../../queryOptions/task";
 import Error from "../shared/error";
 
@@ -17,6 +19,16 @@ import type { TasksByStatus } from "../../types/task";
 import type { Entries } from "../../types/utils";
 
 export default function KanbanBoardContainer() {
+  const currentBoardId = useAtomValue(currentBoardIdAtom);
+
+  if (currentBoardId === null) {
+    return (
+      <S.Container>
+        <div>사이드바에서 Board를 선택해주세요.</div>
+      </S.Container>
+    );
+  }
+
   return (
     <S.Container>
       <ErrorBoundary
@@ -25,17 +37,19 @@ export default function KanbanBoardContainer() {
         }
       >
         <Suspense fallback={<div>Loading...</div>}>
-          <KanbanBoard />
+          <KanbanBoard currentBoardId={currentBoardId} />
         </Suspense>
       </ErrorBoundary>
     </S.Container>
   );
 }
 
-function KanbanBoard() {
-  const { data } = useSuspenseQuery(taskListQueryOptions);
+function KanbanBoard({ currentBoardId }: { currentBoardId: string }) {
+  const { data: tasks } = useSuspenseQuery(
+    taskListQueryOptions(currentBoardId)
+  );
 
-  const { columns, updateTaskStatus } = useTaskColumns(data);
+  const { columns, updateTaskStatus } = useTaskColumns(tasks);
 
   const { handleDragEnd } = useTaskDragDrop({
     onUpdateStatus: updateTaskStatus,

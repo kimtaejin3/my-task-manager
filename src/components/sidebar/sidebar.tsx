@@ -10,7 +10,7 @@ import Error from "../shared/error";
 import Loading from "../shared/loading";
 
 import AddNewBoard from "./add-new-board";
-import BoardNavigation from "./board-navigation";
+import BoardNavigationList from "./board-navigation-list";
 import SidebarVisibilityToggle from "./sidebar-visibility-toggle";
 import ThemeToggle from "./theme-toggle";
 
@@ -30,7 +30,7 @@ export default function Sidebar() {
             }
           >
             <Suspense fallback={<Loading />}>
-              <BoardNavigation />
+              <BoardNavigationList />
             </Suspense>
           </ErrorBoundary>
           <AddNewBoard />

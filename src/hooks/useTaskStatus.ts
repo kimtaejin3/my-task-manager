@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { groupBy } from "es-toolkit";
 
-import type { Task, GroupedTasks } from "../types/task";
+import type { Task, TasksByStatus } from "../types/task";
 
 export function useTaskColumns(initialTasks: Task[]) {
-  const [columns, setColumns] = useState<GroupedTasks>(() =>
-    groupBy(initialTasks, (task) => task.status)
-  );
+  const initialColumns = useMemo(() => {
+    return groupBy(initialTasks, (task) => task.status);
+  }, [initialTasks]);
+
+  const [columns, setColumns] = useState<TasksByStatus>(initialColumns);
+
+  useEffect(() => {
+    setColumns(initialColumns);
+  }, [initialColumns]);
 
   const updateTaskStatus = (
     sourceStatus: {
@@ -19,9 +25,9 @@ export function useTaskColumns(initialTasks: Task[]) {
       droppableId: string;
     }
   ) => {
-    const sourceDroppableId = sourceStatus.droppableId as keyof GroupedTasks;
+    const sourceDroppableId = sourceStatus.droppableId as keyof TasksByStatus;
     const destinationDroppableId =
-      destinationStatus.droppableId as keyof GroupedTasks;
+      destinationStatus.droppableId as keyof TasksByStatus;
 
     const sourceTasks = columns[sourceDroppableId];
     const destinationTasks = columns[destinationDroppableId];
