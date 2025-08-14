@@ -50,6 +50,7 @@ function KanbanBoard() {
     taskListQueryOptions(currentBoardId)
   );
 
+  // 불필요한 랜더링 방지
   const emptyTasks: Task[] = useMemo(() => [], []);
   const { columns, updateTaskStatus } = useTaskColumns(tasks ?? emptyTasks);
 
