@@ -1,10 +1,10 @@
-import { Suspense } from "react";
+import { Suspense, useMemo } from "react";
 
 import { ErrorBoundary } from "react-error-boundary";
 
 import styled from "@emotion/styled";
 import { DragDropContext } from "@hello-pangea/dnd";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 
 import { useTaskColumns } from "../../hooks/useTaskStatus";
@@ -15,8 +15,12 @@ import Error from "../shared/error";
 
 import TaskColumn from "./task-column";
 
-import type { TasksByStatus } from "../../types/task";
+import type { Task, TasksByStatus } from "../../types/task";
 import type { Entries } from "../../types/utils";
+
+const TaskListLoading = () => {
+  return <div>Loading...</div>;
+};
 
 export default function KanbanBoardContainer() {
   return (
@@ -26,7 +30,7 @@ export default function KanbanBoardContainer() {
           <Error errorMessage="Task List 데이터를 불러오는중 문제가 발생했어요." />
         }
       >
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<TaskListLoading />}>
           <KanbanBoard />
         </Suspense>
       </ErrorBoundary>
@@ -36,15 +40,20 @@ export default function KanbanBoardContainer() {
 
 function KanbanBoard() {
   const selectedBoardId = useAtomValue(selectedBoardIdAtom);
+
+  // currentBoardId, taskListQueryOptions 관련 코드를 간소화하기 위함
   const { data: boardList } = useSuspenseQuery(boardListQueryOptions);
 
   const currentBoardId = selectedBoardId ?? boardList[0].id;
 
-  const { data: tasks } = useSuspenseQuery(
+  const { data: tasks, isLoading: isTasksLoading } = useQuery(
     taskListQueryOptions(currentBoardId)
   );
 
-  const { columns, updateTaskStatus } = useTaskColumns(tasks);
+  const emptyTasks: Task[] = useMemo(() => [], []);
+  const { columns, updateTaskStatus } = useTaskColumns(tasks ?? emptyTasks);
+
+  if (isTasksLoading) return <TaskListLoading />;
 
   return (
     <S.Grid>

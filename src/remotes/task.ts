@@ -7,5 +7,6 @@ type taskListResponse = {
   tasks: Task[];
 };
 
-export const getTaskList = (boardId: string) =>
-  http.get<taskListResponse>(`/board-${boardId}.json`);
+export const getTaskList = async (boardId: string) => {
+  return http.get<taskListResponse>(`/board-${boardId}.json`);
+};
