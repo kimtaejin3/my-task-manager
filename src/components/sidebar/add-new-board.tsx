@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
+import { overlay } from "overlay-kit";
 
+import AddNewBoardDialog from "../dialogs/add-new-board-dialog";
 import Icon from "../shared/icon";
 
 import SidebarButton from "./sidebar-button";
@@ -8,6 +10,11 @@ export default function AddNewBoard() {
   return (
     <S.Container>
       <SidebarButton
+        onClick={() => {
+          overlay.open(({ isOpen, unmount }) => {
+            return <AddNewBoardDialog isOpen={isOpen} close={unmount} />;
+          });
+        }}
         left={<Icon type="add" size={16} />}
         center={<span>Add new board</span>}
       />

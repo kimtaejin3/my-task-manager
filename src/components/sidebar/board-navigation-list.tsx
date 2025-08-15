@@ -28,7 +28,11 @@ function NavigationItem({ board, index }: { board: Board; index: number }) {
   const [selectedBoardId, setSelectedBoardId] = useAtom(selectedBoardIdAtom);
 
   return (
-    <S.NavigationItem isSelected={selectedBoardId === board.id || index === 0}>
+    <S.NavigationItem
+      isSelected={
+        selectedBoardId === null ? index === 0 : selectedBoardId === board.id
+      }
+    >
       <SidebarButton
         onClick={() => {
           setSelectedBoardId(board.id);
