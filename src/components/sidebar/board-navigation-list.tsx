@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 
 import { selectedBoardIdAtom } from "../../jotai/atom/board";
 import { boardListQueryOptions } from "../../queryOptions/board";
+import colors from "../../styles/color";
 
 import SidebarButton from "./sidebar-button";
 
@@ -24,10 +25,10 @@ export default function BoardNavigationList() {
 }
 
 function NavigationItem({ board }: { board: Board }) {
-  const setSelectedBoardId = useSetAtom(selectedBoardIdAtom);
+  const [selectedBoardId, setSelectedBoardId] = useAtom(selectedBoardIdAtom);
 
   return (
-    <li>
+    <S.NavigationItem isSelected={selectedBoardId === board.id}>
       <SidebarButton
         onClick={() => {
           setSelectedBoardId(board.id);
@@ -39,7 +40,7 @@ function NavigationItem({ board }: { board: Board }) {
         }
         center={<span>{board.name}</span>}
       />
-    </li>
+    </S.NavigationItem>
   );
 }
 
@@ -48,6 +49,12 @@ const S = {
     display: flex;
     flex-direction: column;
     gap: 12px;
+  `,
+
+  NavigationItem: styled.li<{ isSelected: boolean }>`
+    border: 2px solid
+      ${(props) => (props.isSelected ? colors.blueLight : "transparent")};
+    border-radius: 99px;
   `,
 
   EmojiContainer: styled.div<{ bgColor: string }>`

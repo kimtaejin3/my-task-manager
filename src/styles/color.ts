@@ -10,6 +10,8 @@ const colors = {
   bluePrimary: "#253985",
   blueMiddle: "#70A3F3",
   blueLight: "#DEE9FC",
+  blue: "#3662E3",
+  blueSurface: "#F0F6FE",
 
   // Yellow colors
   yellowPrimary: "#C18D30",
@@ -29,7 +31,6 @@ const colors = {
   slate900: "#191B1F", // near-black text/background
   slate800: "#2A2D32", // dark surface
   ivory: "#FEF7EE", // light text on dark
-  blueSurface: "#F0F6FE", // light surface used in light theme
 };
 
 export default colors;
