@@ -16,19 +16,19 @@ export default function BoardNavigationList() {
   return (
     <nav>
       <S.NavigationList>
-        {boardList.map((board) => (
-          <NavigationItem key={board.id} board={board} />
+        {boardList.map((board, index) => (
+          <NavigationItem key={board.id} board={board} index={index} />
         ))}
       </S.NavigationList>
     </nav>
   );
 }
 
-function NavigationItem({ board }: { board: Board }) {
+function NavigationItem({ board, index }: { board: Board; index: number }) {
   const [selectedBoardId, setSelectedBoardId] = useAtom(selectedBoardIdAtom);
 
   return (
-    <S.NavigationItem isSelected={selectedBoardId === board.id}>
+    <S.NavigationItem isSelected={selectedBoardId === board.id || index === 0}>
       <SidebarButton
         onClick={() => {
           setSelectedBoardId(board.id);
