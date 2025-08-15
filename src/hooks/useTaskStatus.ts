@@ -3,39 +3,29 @@ import { useEffect, useMemo, useState } from "react";
 import { groupBy } from "es-toolkit";
 
 import type { Status, Task, TasksByStatus } from "../types/task";
+import type { Entries } from "../types/utils";
 import type { DropResult } from "@hello-pangea/dnd";
 
-const STATUS_ORDER: Status[] = [
-  "backlog",
-  "in-progress",
-  "in-review",
-  "completed",
-];
+export function useTaskColumns(tasks: Task[]) {
+  const calculatedColumns = useMemo(
+    () =>
+      createTaskColumns({
+        tasks,
+        columnTemplate: {
+          backlog: [],
+          "in-progress": [],
+          "in-review": [],
+          completed: [],
+        },
+      }),
+    [tasks]
+  );
 
-export function useTaskColumns(initialTasks: Task[]) {
-  const initialColumns = useMemo(() => {
-    const groupedTasks = groupBy(initialTasks, (task) => task.status);
-    const orderedColumns: TasksByStatus = {
-      backlog: [],
-      "in-progress": [],
-      "in-review": [],
-      completed: [],
-    };
-
-    STATUS_ORDER.forEach((status) => {
-      if (groupedTasks[status]) {
-        orderedColumns[status] = groupedTasks[status];
-      }
-    });
-
-    return orderedColumns;
-  }, [initialTasks]);
-
-  const [columns, setColumns] = useState<TasksByStatus>(initialColumns);
+  const [columns, setColumns] = useState<TasksByStatus>(calculatedColumns);
 
   useEffect(() => {
-    setColumns(initialColumns);
-  }, [initialColumns]);
+    setColumns(calculatedColumns);
+  }, [calculatedColumns]);
 
   const updateTaskStatus = (result: DropResult) => {
     if (!result.destination) return;
@@ -72,3 +62,22 @@ export function useTaskColumns(initialTasks: Task[]) {
     updateTaskStatus,
   };
 }
+
+const createTaskColumns = ({
+  tasks,
+  columnTemplate,
+}: {
+  tasks: Task[];
+  columnTemplate: { [key in Status]: Task[] };
+}) => {
+  const groupedTasks = groupBy(tasks, (task) => task.status);
+  const orderedColumns = columnTemplate;
+
+  (Object.entries(groupedTasks) as Entries<TasksByStatus>).forEach(
+    ([status, tasks]) => {
+      orderedColumns[status] = tasks;
+    }
+  );
+
+  return orderedColumns;
+};
