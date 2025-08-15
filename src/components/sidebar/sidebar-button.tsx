@@ -21,9 +21,9 @@ export default function SidebarButton({
     <S.Container onClick={onClick} isSidebarOpen={isSidebarOpen}>
       <S.Content>
         {left}
-        <S.FadeInText isVisible={isSidebarOpen}>{center}</S.FadeInText>
+        <S.FadeIn isVisible={isSidebarOpen}>{center}</S.FadeIn>
       </S.Content>
-      <S.FadeInText isVisible={isSidebarOpen}>{right}</S.FadeInText>
+      <S.FadeIn isVisible={isSidebarOpen}>{right}</S.FadeIn>
     </S.Container>
   );
 }
@@ -47,7 +47,7 @@ const S = {
     gap: 10px;
   `,
 
-  FadeInText: styled.div<{ isVisible: boolean }>`
+  FadeIn: styled.div<{ isVisible: boolean }>`
     display: ${(props) => (props.isVisible ? "block" : "none")};
     overflow: hidden;
     white-space: nowrap;
