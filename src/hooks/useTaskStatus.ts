@@ -2,12 +2,33 @@ import { useEffect, useMemo, useState } from "react";
 
 import { groupBy } from "es-toolkit";
 
-import type { Task, TasksByStatus } from "../types/task";
+import type { Status, Task, TasksByStatus } from "../types/task";
 import type { DropResult } from "@hello-pangea/dnd";
+
+const STATUS_ORDER: Status[] = [
+  "backlog",
+  "in-progress",
+  "in-review",
+  "completed",
+];
 
 export function useTaskColumns(initialTasks: Task[]) {
   const initialColumns = useMemo(() => {
-    return groupBy(initialTasks, (task) => task.status);
+    const groupedTasks = groupBy(initialTasks, (task) => task.status);
+    const orderedColumns: TasksByStatus = {
+      backlog: [],
+      "in-progress": [],
+      "in-review": [],
+      completed: [],
+    };
+
+    STATUS_ORDER.forEach((status) => {
+      if (groupedTasks[status]) {
+        orderedColumns[status] = groupedTasks[status];
+      }
+    });
+
+    return orderedColumns;
   }, [initialTasks]);
 
   const [columns, setColumns] = useState<TasksByStatus>(initialColumns);

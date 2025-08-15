@@ -54,6 +54,7 @@ function KanbanBoard() {
   const emptyTasks: Task[] = useMemo(() => [], []);
   const { columns, updateTaskStatus } = useTaskColumns(tasks ?? emptyTasks);
 
+  console.log("columns: ", columns);
   if (isTasksLoading) return <TaskListLoading />;
 
   return (
