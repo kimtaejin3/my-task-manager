@@ -32,28 +32,24 @@ export function useTaskColumns(tasks: Task[]) {
 
     const sourceStatus = {
       index: result.source.index,
-      droppableId: result.source.droppableId,
+      droppableId: result.source.droppableId as Status,
     };
 
     const destinationStatus = {
       index: result.destination.index,
-      droppableId: result.destination.droppableId,
+      droppableId: result.destination.droppableId as Status,
     };
 
-    const sourceDroppableId = sourceStatus.droppableId as keyof TasksByStatus;
-    const destinationDroppableId =
-      destinationStatus.droppableId as keyof TasksByStatus;
-
-    const sourceTasks = columns[sourceDroppableId];
-    const destinationTasks = columns[destinationDroppableId];
+    const sourceTasks = columns[sourceStatus.droppableId];
+    const destinationTasks = columns[destinationStatus.droppableId];
 
     const [removeTaskItem] = sourceTasks.splice(sourceStatus.index, 1);
     destinationTasks.splice(destinationStatus.index, 0, removeTaskItem);
 
     setColumns({
       ...columns,
-      [sourceDroppableId]: sourceTasks,
-      [destinationDroppableId]: destinationTasks,
+      [sourceStatus.droppableId]: sourceTasks,
+      [destinationStatus.droppableId]: destinationTasks,
     });
   };
 
