@@ -1,7 +1,10 @@
+import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { overlay } from "overlay-kit";
 
 import colors from "../../styles/color";
 import typography from "../../styles/font";
+import EditTaskDialog from "../dialogs/edit-task-dialog";
 
 import type { Task } from "../../types/task";
 
@@ -10,8 +13,23 @@ interface TaskCardProps extends Task {}
 export default function TaskCard(task: TaskCardProps) {
   const { title, tags, background } = task;
 
+  const theme = useTheme();
+
   return (
-    <S.Card>
+    <S.Card
+      onClick={() => {
+        overlay.open(({ isOpen, unmount }) => {
+          return (
+            <EditTaskDialog
+              isOpen={isOpen}
+              close={unmount}
+              task={task}
+              theme={theme}
+            />
+          );
+        });
+      }}
+    >
       <S.Content>
         {background && (
           <S.BackgroundImage>
