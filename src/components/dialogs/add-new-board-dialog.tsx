@@ -12,12 +12,13 @@ export default function AddNewBoardDialog({
   theme: Theme;
 }) {
   return (
-    <Dialog isOpen={isOpen} close={close}>
-      <Dialog.Content theme={theme}>
+    <Dialog isOpen={isOpen} close={close} theme={theme}>
+      <Dialog.Wrapper>
+        <Dialog.Header title="Add New Board" />
         <p>Are you sure you want to add a new board?</p>
         <button onClick={close}>Cancel</button>
         <button onClick={close}>Confirm</button>
-      </Dialog.Content>
+      </Dialog.Wrapper>
     </Dialog>
   );
 }

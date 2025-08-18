@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 import { useSidebar } from "../../contexts/SidebarContext";
@@ -5,10 +6,11 @@ import Icon from "../shared/icon";
 
 export default function SidebarVisibilityToggle() {
   const { isSidebarOpen, toggleSidebar } = useSidebar();
+  const theme = useTheme();
 
   return (
     <S.Container onClick={toggleSidebar} isSidebarOpen={isSidebarOpen}>
-      <Icon type={isSidebarOpen ? "close" : "menu"} size={24} />
+      <Icon type={isSidebarOpen ? "close" : "menu"} theme={theme} size={24} />
     </S.Container>
   );
 }

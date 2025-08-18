@@ -1,20 +1,19 @@
-import { useTheme } from "@emotion/react";
-
 import AddIcon from "../../assets/svgs/add.svg?react";
 import CloseIcon from "../../assets/svgs/close.svg?react";
 import MenuIcon from "../../assets/svgs/menu.svg?react";
 import MoonIcon from "../../assets/svgs/moon.svg?react";
 import SunIcon from "../../assets/svgs/sun.svg?react";
 
+import type { Theme } from "@emotion/react";
+
 // SVG를 인라인으로 사용하는 방식
 interface IconProps {
   type: "sun" | "moon" | "menu" | "close" | "add";
   size?: number;
+  theme: Theme;
 }
 
-export default function Icon({ type, size = 24 }: IconProps) {
-  const theme = useTheme();
-
+export default function Icon({ type, size = 24, theme }: IconProps) {
   // 테마에 따른 기본 색상
   const color =
     theme.themeType === "dark"

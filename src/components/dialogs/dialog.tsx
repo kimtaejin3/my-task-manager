@@ -1,32 +1,80 @@
+import { createContext, useContext } from "react";
+
 import styled from "@emotion/styled";
+
+import typography from "../../styles/font";
+import Icon from "../shared/icon";
 
 import type { Theme } from "@emotion/react";
 
 interface DialogProps {
   isOpen: boolean;
   close: () => void;
+  theme: Theme;
   children: React.ReactNode;
 }
 
-export default function Dialog({ isOpen, close, children }: DialogProps) {
+type DialogContextType = {
+  isOpen: boolean;
+  close: () => void;
+  theme: Theme;
+};
+
+export const DialogContext = createContext<DialogContextType | undefined>(
+  undefined
+);
+
+export default function Dialog({
+  isOpen,
+  close,
+  theme,
+  children,
+}: DialogProps) {
   if (!isOpen) return null;
 
-  return <S.Dialog onClick={close}>{children}</S.Dialog>;
-}
-
-interface DialogContentProps {
-  children: React.ReactNode;
-  theme: Theme;
-}
-
-Dialog.Content = function DialogContent({
-  children,
-  theme,
-}: DialogContentProps) {
   return (
-    <S.Content onClick={(e) => e.stopPropagation()} theme={theme}>
+    <DialogContext.Provider value={{ isOpen, close, theme }}>
+      <S.Dialog onClick={close}>{children}</S.Dialog>
+    </DialogContext.Provider>
+  );
+}
+
+function useDialogContext() {
+  const context = useContext(DialogContext);
+
+  if (!context) {
+    throw new Error("useDialogContext must be used within a Dialog");
+  }
+
+  return context;
+}
+
+Dialog.Wrapper = function DialogWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { theme } = useDialogContext();
+
+  return (
+    <S.Wrapper theme={theme} onClick={(e) => e.stopPropagation()}>
       {children}
-    </S.Content>
+    </S.Wrapper>
+  );
+};
+
+Dialog.Header = function DialogHeader({ title }: { title: string }) {
+  const { theme, close } = useDialogContext();
+
+  console.log("theme", theme);
+
+  return (
+    <S.Header>
+      <S.HeaderTitle>{title}</S.HeaderTitle>
+      <button onClick={close}>
+        <Icon type="close" size={24} theme={theme} />
+      </button>
+    </S.Header>
   );
 };
 
@@ -43,7 +91,21 @@ const S = {
     align-items: center;
   `,
 
-  Content: styled.div<{ theme: Theme }>`
+  Wrapper: styled.div<{ theme: Theme }>`
     background-color: ${(props) => props.theme.themeValue.primary};
+    border-radius: 12px;
+    width: 520px;
+    padding: 25px 32px 32px;
+    margin: 0 10px;
+  `,
+
+  Header: styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  `,
+
+  HeaderTitle: styled.h2`
+    ${typography.bold20};
   `,
 };

@@ -18,15 +18,15 @@ export default function EditTaskDialog({
   const { title, tags, background } = task;
 
   return (
-    <Dialog isOpen={isOpen} close={close}>
-      <Dialog.Content theme={theme}>
-        <h2>Task Details</h2>
+    <Dialog isOpen={isOpen} close={close} theme={theme}>
+      <Dialog.Wrapper>
+        <Dialog.Header title="Task Details" />
         <img src={background || ""} alt="" />
         <input type="text" value={title} />
         <input type="text" value={tags.join(",")} />
         <button onClick={close}>Cancel</button>
         <button onClick={close}>Confirm</button>
-      </Dialog.Content>
+      </Dialog.Wrapper>
     </Dialog>
   );
 }
