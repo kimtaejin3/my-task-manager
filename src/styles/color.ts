@@ -1,3 +1,4 @@
+//TODO: 색 변수 이름 정리하기
 const colors = {
   // Gray color
   gray: "#7E878D",
@@ -31,6 +32,17 @@ const colors = {
   slate900: "#191B1F", // near-black text/background
   slate800: "#2A2D32", // dark surface
   ivory: "#FEF7EE", // light text on dark
+  slate300: "#3A3E44",
+  ivory300: "#cce0ff",
+
+  // Logo background colors
+  logoRed: "#F6CCCB",
+  logoOrange: "#F8D8B0",
+  logoYellow: "#FCF097",
+  logoGreen: "#C7F5D3",
+  logoBlue: "#C4DAFB",
+  logoPurple: "#E6D6FC",
+  selectionRed: "#ff6363",
 };
 
 export default colors;

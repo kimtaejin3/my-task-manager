@@ -85,14 +85,14 @@ const S = {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
   `,
 
   Wrapper: styled.div<{ theme: Theme }>`
-    background-color: ${(props) => props.theme.themeValue.primary};
+    background-color: ${(props) => props.theme.themeValue.secondary};
     border-radius: 12px;
     width: 520px;
     padding: 25px 32px 32px;
