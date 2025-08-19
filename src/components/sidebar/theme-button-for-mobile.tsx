@@ -15,9 +15,9 @@ export default function ThemeButtonForMobile() {
       {(() => {
         switch (theme.themeType) {
           case "light":
-            return <Icon type="sun" size={16} theme={theme} />;
+            return <Icon svgName="sun" size={16} theme={theme} />;
           case "dark":
-            return <Icon type="moon" size={16} theme={theme} />;
+            return <Icon svgName="moon" size={16} theme={theme} />;
           default:
             theme.themeType satisfies never;
         }

@@ -10,7 +10,11 @@ export default function SidebarVisibilityToggle() {
 
   return (
     <S.Container onClick={toggleSidebar} isSidebarOpen={isSidebarOpen}>
-      <Icon type={isSidebarOpen ? "close" : "menu"} theme={theme} size={24} />
+      <Icon
+        svgName={isSidebarOpen ? "close" : "menu"}
+        theme={theme}
+        size={24}
+      />
     </S.Container>
   );
 }

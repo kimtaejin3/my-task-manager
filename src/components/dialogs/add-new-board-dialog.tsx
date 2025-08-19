@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 
 import colors from "../../styles/color";
 import typography from "../../styles/font";
+import Icon from "../shared/icon";
 
 import Dialog from "./dialog";
 
@@ -83,21 +84,7 @@ function AddNewBoardForm({ theme }: { theme: Theme }) {
       <S.ButtonContainer>
         <S.SubmitButton type="submit">
           Create Board
-          {/* TODO(리팩토링): 아이콘 컴포넌트 수정 필요 */}
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 14L8.23309 16.4248C8.66178 16.7463 9.26772 16.6728 9.60705 16.2581L18 6"
-              stroke="#FEF7EE"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
-          </svg>
+          <Icon svgName="check" size={24} color="red" />
         </S.SubmitButton>
         <S.CancelButton theme={theme} type="button">
           Cancel

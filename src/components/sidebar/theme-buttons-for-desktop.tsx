@@ -13,14 +13,14 @@ export default function ThemeButtonsForDesktop() {
         onClick={() => theme.changeTheme("light")}
         isActive={theme.themeType === "light"}
       >
-        <Icon type="sun" size={16} theme={theme} />
+        <Icon svgName="sun" size={16} theme={theme} />
         <span>Light</span>
       </S.ThemeButton>
       <S.ThemeButton
         onClick={() => theme.changeTheme("dark")}
         isActive={theme.themeType === "dark"}
       >
-        <Icon type="moon" size={16} theme={theme} />
+        <Icon svgName="moon" size={16} theme={theme} />
         <span>Dark</span>
       </S.ThemeButton>
     </>

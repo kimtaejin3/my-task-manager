@@ -24,7 +24,7 @@ export default function AddNewBoard() {
             );
           });
         }}
-        left={<Icon type="add" size={16} theme={theme} />}
+        left={<Icon svgName="add" size={16} theme={theme} />}
         center={<span>Add new board</span>}
       />
     </S.Container>

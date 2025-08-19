@@ -1,4 +1,5 @@
 import AddIcon from "../../assets/svgs/add.svg?react";
+import CheckIcon from "../../assets/svgs/check.svg?react";
 import CloseIcon from "../../assets/svgs/close.svg?react";
 import MenuIcon from "../../assets/svgs/menu.svg?react";
 import MoonIcon from "../../assets/svgs/moon.svg?react";
@@ -6,65 +7,74 @@ import SunIcon from "../../assets/svgs/sun.svg?react";
 
 import type { Theme } from "@emotion/react";
 
-// SVG를 인라인으로 사용하는 방식
 interface IconProps {
-  type: "sun" | "moon" | "menu" | "close" | "add";
+  svgName: "sun" | "moon" | "menu" | "close" | "add" | "check";
   size?: number;
-  theme: Theme;
+  theme?: Theme;
+  color?: string;
 }
 
-export default function Icon({ type, size = 24, theme }: IconProps) {
-  // 테마에 따른 기본 색상
-  const color =
-    theme.themeType === "dark"
-      ? "#FFFFFF" // 다크모드 기본 색상
-      : "#000000"; // 라이트모드 기본 색상
+export default function Icon({ svgName, size = 24, theme, color }: IconProps) {
+  const finalColor = (() => {
+    if (theme) {
+      return theme.themeType === "dark" ? "#FFF" : "#000";
+    }
+    return color;
+  })();
 
-  // 아이콘 컴포넌트 매핑
   const renderIcon = () => {
-    switch (type) {
+    switch (svgName) {
       case "sun":
         return (
           <SunIcon
-            fill={color}
-            stroke={color}
+            fill={finalColor}
+            stroke={finalColor}
             style={{ width: size, height: size }}
           />
         );
       case "moon":
         return (
           <MoonIcon
-            fill={color}
-            stroke={color}
+            fill={finalColor}
+            stroke={finalColor}
             style={{ width: size, height: size }}
           />
         );
       case "menu":
         return (
           <MenuIcon
-            fill={color}
-            stroke={color}
+            fill={finalColor}
+            stroke={finalColor}
             style={{ width: size, height: size }}
           />
         );
       case "close":
         return (
           <CloseIcon
-            fill={color}
-            stroke={color}
+            fill={finalColor}
+            stroke={finalColor}
             style={{ width: size, height: size }}
           />
         );
       case "add":
         return (
           <AddIcon
-            fill={color}
-            stroke={color}
+            fill={finalColor}
+            stroke={finalColor}
             style={{ width: size, height: size }}
           />
         );
-      default:
+      case "check":
+        return (
+          <CheckIcon
+            stroke={finalColor}
+            style={{ width: size, height: size }}
+          />
+        );
+      default: {
+        svgName satisfies never;
         return null;
+      }
     }
   };
 

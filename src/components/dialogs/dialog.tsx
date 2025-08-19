@@ -66,13 +66,11 @@ Dialog.Wrapper = function DialogWrapper({
 Dialog.Header = function DialogHeader({ title }: { title: string }) {
   const { theme, close } = useDialogContext();
 
-  console.log("theme", theme);
-
   return (
     <S.Header>
       <S.HeaderTitle>{title}</S.HeaderTitle>
       <button onClick={close}>
-        <Icon type="close" size={24} theme={theme} />
+        <Icon svgName="close" size={24} theme={theme} />
       </button>
     </S.Header>
   );
