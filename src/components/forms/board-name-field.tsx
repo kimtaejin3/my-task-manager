@@ -1,9 +1,5 @@
-import styled from "@emotion/styled";
-
-import colors from "../../styles/color";
-import typography from "../../styles/font";
-
 import Input from "./Input";
+import Label from "./label";
 
 import type { Theme } from "@emotion/react";
 
@@ -18,9 +14,9 @@ export default function BoardNameField({
 }) {
   return (
     <fieldset>
-      <S.Label id="boardNameLabel" htmlFor="boardName">
+      <Label id="boardNameLabel" htmlFor="boardName">
         Board name
-      </S.Label>
+      </Label>
 
       <Input
         theme={theme}
@@ -33,13 +29,3 @@ export default function BoardNameField({
     </fieldset>
   );
 }
-
-const S = {
-  Label: styled.label`
-    margin-bottom: 8px;
-    display: block;
-
-    ${typography.medium12}
-    color: ${colors.gray};
-  `,
-};

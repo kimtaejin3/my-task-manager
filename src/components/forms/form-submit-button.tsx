@@ -24,8 +24,9 @@ const S = {
     color: ${colors.white};
     border: none;
     border-radius: 40px;
-    width: 167px;
-    padding: 12px;
+    // width: 167px;
+    width: fit-content;
+    padding: 12px 25px;
     cursor: pointer;
     display: flex;
     align-items: center;

@@ -4,6 +4,15 @@ import typography from "../../styles/font";
 
 import type { Theme } from "@emotion/react";
 
+interface InputProps {
+  theme: Theme;
+  value: string;
+  type: string;
+  id: string;
+  placeholder: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 export default function Input({
   theme,
   value,
@@ -11,14 +20,7 @@ export default function Input({
   id,
   placeholder,
   onChange,
-}: {
-  theme: Theme;
-  value: string;
-  type: string;
-  id: string;
-  placeholder: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) {
+}: InputProps) {
   return (
     <S.Input
       theme={theme}

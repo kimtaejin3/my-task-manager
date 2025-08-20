@@ -9,7 +9,15 @@ import FormButtons from "./form-buttons";
 import FormCancelButton from "./form-cancel-button";
 import FormSubmitButton from "./form-submit-button";
 
-export default function AddNewBoardForm({ theme }: { theme: Theme }) {
+interface AddNewBoardFormProps {
+  theme: Theme;
+  onHideModal: () => void;
+}
+
+export default function AddNewBoardForm({
+  theme,
+  onHideModal,
+}: AddNewBoardFormProps) {
   const [formData, setFormData] = useState({
     boardName: "",
     boardLogo: 0,
@@ -31,7 +39,9 @@ export default function AddNewBoardForm({ theme }: { theme: Theme }) {
       {/* 재사용성의 이점은 챙기면서도 코드를 잘 알아볼 수 있게 */}
       <FormButtons>
         <FormSubmitButton>Create Board</FormSubmitButton>
-        <FormCancelButton theme={theme}>Cancel</FormCancelButton>
+        <FormCancelButton onClick={onHideModal} theme={theme}>
+          Cancel
+        </FormCancelButton>
       </FormButtons>
     </Form>
   );

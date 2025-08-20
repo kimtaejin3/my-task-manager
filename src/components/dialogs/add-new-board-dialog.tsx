@@ -17,7 +17,7 @@ export default function AddNewBoardDialog({
     <Dialog isOpen={isOpen} close={close} theme={theme}>
       <Dialog.Wrapper>
         <Dialog.Header title="New Board" />
-        <AddNewBoardForm theme={theme} />
+        <AddNewBoardForm theme={theme} onHideModal={close} />
       </Dialog.Wrapper>
     </Dialog>
   );

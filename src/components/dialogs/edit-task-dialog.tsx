@@ -1,5 +1,7 @@
 import { type Theme } from "@emotion/react";
 
+import TaskForm from "../forms/task-form";
+
 import Dialog from "./dialog";
 
 import type { Task } from "../../types/task";
@@ -15,17 +17,13 @@ export default function EditTaskDialog({
   task: Task;
   theme: Theme;
 }) {
-  const { title, tags, background } = task;
+  // const { title, tags, background } = task;
 
   return (
     <Dialog isOpen={isOpen} close={close} theme={theme}>
       <Dialog.Wrapper>
         <Dialog.Header title="Task Details" />
-        <img src={background || ""} alt="" />
-        <input type="text" value={title} />
-        <input type="text" value={tags.join(",")} />
-        <button onClick={close}>Cancel</button>
-        <button onClick={close}>Confirm</button>
+        <TaskForm theme={theme} task={task} onHideModal={close} />
       </Dialog.Wrapper>
     </Dialog>
   );

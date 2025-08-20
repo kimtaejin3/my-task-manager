@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 
 import { LOGOS } from "../../constants/board";
 import colors from "../../styles/color";
-import typography from "../../styles/font";
+
+import Label from "./label";
 
 type BoardLogoSelectorProps = {
   selectedLogo: number;
@@ -15,7 +16,9 @@ export default function BoardLogoSelector({
 }: BoardLogoSelectorProps) {
   return (
     <fieldset>
-      <S.Label id="boardLogoLabel">Logo</S.Label>
+      <Label id="boardLogoLabel" htmlFor="boardLogo">
+        Logo
+      </Label>
       <S.Grid role="radiogroup" aria-labelledby="boardLogoLabel">
         {LOGOS.map((logo) => (
           <BoardLogoInput
@@ -63,14 +66,6 @@ function BoardLogoInput({
 }
 
 const S = {
-  Label: styled.label`
-    margin-bottom: 8px;
-    display: block;
-
-    ${typography.medium12}
-    color: ${colors.gray};
-  `,
-
   Grid: styled.div`
     display: grid;
     grid-template-columns: repeat(8, 1fr);
