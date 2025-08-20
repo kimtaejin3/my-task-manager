@@ -17,7 +17,6 @@ export default function AddNewBoardForm({ theme }: { theme: Theme }) {
 
   return (
     <Form>
-      {/* BoardNameField는 불필요한 레이어일까? placeholder등 Input에 대한 Props가 깊어져서 분리하긴 했는데.. */}
       <BoardNameField
         theme={theme}
         value={formData.boardName}
