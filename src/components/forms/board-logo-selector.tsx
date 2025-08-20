@@ -46,7 +46,6 @@ function BoardLogoInput({
         id={`logo-${logo.id}`}
         name="boardLogo"
         value={logo.id}
-        aria-describedby="logo-selection-description"
         checked={checked}
         onChange={onChange}
       />
