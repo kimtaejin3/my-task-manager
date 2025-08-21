@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { overlay } from "overlay-kit";
 
-import colors from "../../styles/color";
+import { TASK_TAG_CONFIG } from "../../constants/task";
 import typography from "../../styles/font";
 import EditTaskDialog from "../dialogs/edit-task-dialog";
 
@@ -40,8 +40,7 @@ export default function TaskCard(task: TaskCardProps) {
         {tags.length > 0 && (
           <S.TagList>
             {tags.map((tag) => {
-              const { textColor, backgroundColor } =
-                get_tag_name_color_map(tag);
+              const { textColor, backgroundColor } = TASK_TAG_CONFIG[tag];
 
               return (
                 <S.Tag
@@ -109,33 +108,3 @@ const S = {
     border-radius: 4px;
   `,
 };
-
-function get_tag_name_color_map(tag_name: string) {
-  switch (tag_name) {
-    case "concept":
-      return {
-        backgroundColor: colors.redLight,
-        textColor: colors.redPrimary,
-      };
-    case "technical":
-      return {
-        backgroundColor: colors.blueLight,
-        textColor: colors.bluePrimary,
-      };
-    case "design":
-      return {
-        backgroundColor: colors.yellowLight,
-        textColor: colors.yellowPrimary,
-      };
-    case "front-end":
-      return {
-        backgroundColor: colors.greenLight,
-        textColor: colors.greenPrimary,
-      };
-    default:
-      return {
-        backgroundColor: "#f0f0f0",
-        textColor: "#333",
-      };
-  }
-}
