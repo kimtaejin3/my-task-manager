@@ -2,9 +2,9 @@ import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { overlay } from "overlay-kit";
 
-import { TASK_TAG_CONFIG } from "../../constants/task";
 import typography from "../../styles/font";
 import EditTaskDialog from "../dialogs/edit-task-dialog";
+import TagList from "../shared/tag-list";
 
 import type { Task } from "../../types/task";
 
@@ -32,54 +32,38 @@ export default function TaskCard(task: TaskCardProps) {
     >
       <S.Content>
         {background && (
-          <S.BackgroundImage>
+          <S.Background>
             <img src={background} alt="" />
-          </S.BackgroundImage>
+          </S.Background>
         )}
         <S.Title>{title}</S.Title>
-        {tags.length > 0 && (
-          <S.TagList>
-            {tags.map((tag) => {
-              const { textColor, backgroundColor } = TASK_TAG_CONFIG[tag];
-
-              return (
-                <S.Tag
-                  key={tag}
-                  textColor={textColor}
-                  backgroundColor={backgroundColor}
-                >
-                  {tag}
-                </S.Tag>
-              );
-            })}
-          </S.TagList>
-        )}
+        <TagList tags={tags} />
       </S.Content>
     </S.Card>
   );
 }
 
 const S = {
-  Card: styled.div`
-    background: ${(props) => props.theme.themeValue.primary};
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    overflow: hidden;
-    cursor: pointer;
-  `,
-
-  BackgroundImage: styled.div`
+  Background: styled.div`
     width: 100%;
     height: 130px;
     overflow: hidden;
     margin-bottom: 12px;
     border-radius: 12px;
+    position: relative;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+  `,
+  Card: styled.div`
+    background: ${(props) => props.theme.themeValue.primary};
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    cursor: pointer;
   `,
 
   Content: styled.div`
@@ -89,22 +73,5 @@ const S = {
   Title: styled.h3`
     ${typography.medium14}
     margin: 0 0 8px 0;
-  `,
-
-  TagList: styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-  `,
-
-  Tag: styled.span<{
-    textColor: string;
-    backgroundColor: string;
-  }>`
-    ${typography.medium12}
-    color: ${(props) => props.textColor};
-    background-color: ${(props) => props.backgroundColor};
-    padding: 2px 8px;
-    border-radius: 4px;
   `,
 };

@@ -36,6 +36,7 @@ const colors = {
   ivory300: "#cce0ff",
 
   // Logo background colors
+  red: "#DD524C",
   logoRed: "#F6CCCB",
   logoOrange: "#F8D8B0",
   logoYellow: "#FCF097",

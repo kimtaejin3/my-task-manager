@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Droppable } from "@hello-pangea/dnd";
 
-import { TASK_STATUS_CONFIG } from "../../constants/task-status";
+import { TASK_STATUS_CONFIG } from "../../constants/task";
 
 import ColumnHeader from "./column-header";
 import DraggableTaskCard from "./draggable-task-card";
