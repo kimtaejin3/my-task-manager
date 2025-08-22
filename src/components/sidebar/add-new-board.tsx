@@ -2,7 +2,8 @@ import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { overlay } from "overlay-kit";
 
-import AddNewBoardDialog from "../dialogs/add-new-board-dialog";
+import Dialog from "../dialog/dialog";
+import AddNewBoardForm from "../forms/add-new-board-form";
 import Icon from "../shared/icon";
 
 import SidebarButton from "./sidebar-button";
@@ -16,11 +17,12 @@ export default function AddNewBoard() {
         onClick={() => {
           overlay.open(({ isOpen, unmount }) => {
             return (
-              <AddNewBoardDialog
-                isOpen={isOpen}
-                close={unmount}
-                theme={theme}
-              />
+              <Dialog isOpen={isOpen} close={unmount} theme={theme}>
+                <Dialog.Wrapper>
+                  <Dialog.Header title="New Board" />
+                  <AddNewBoardForm theme={theme} onHideModal={unmount} />
+                </Dialog.Wrapper>
+              </Dialog>
             );
           });
         }}

@@ -3,8 +3,11 @@ import styled from "@emotion/styled";
 import { overlay } from "overlay-kit";
 
 import typography from "../../styles/font";
-import EditTaskDialog from "../dialogs/edit-task-dialog";
+import Dialog from "../dialog/dialog";
+import TaskForm from "../forms/task-form";
 import TagList from "../shared/tag-list";
+
+import Background from "./background";
 
 import type { Task } from "../../types/task";
 
@@ -20,22 +23,18 @@ export default function TaskCard(task: TaskCardProps) {
       onClick={() => {
         overlay.open(({ isOpen, unmount }) => {
           return (
-            <EditTaskDialog
-              isOpen={isOpen}
-              close={unmount}
-              task={task}
-              theme={theme}
-            />
+            <Dialog isOpen={isOpen} close={unmount} theme={theme}>
+              <Dialog.Wrapper>
+                <Dialog.Header title="Task Details" />
+                <TaskForm theme={theme} task={task} onHideModal={unmount} />
+              </Dialog.Wrapper>
+            </Dialog>
           );
         });
       }}
     >
       <S.Content>
-        {background && (
-          <S.Background>
-            <img src={background} alt="" />
-          </S.Background>
-        )}
+        <Background background={background} />
         <S.Title>{title}</S.Title>
         <TagList tags={tags} />
       </S.Content>
@@ -44,20 +43,6 @@ export default function TaskCard(task: TaskCardProps) {
 }
 
 const S = {
-  Background: styled.div`
-    width: 100%;
-    height: 130px;
-    overflow: hidden;
-    margin-bottom: 12px;
-    border-radius: 12px;
-    position: relative;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  `,
   Card: styled.div`
     background: ${(props) => props.theme.themeValue.primary};
     border-radius: 12px;
