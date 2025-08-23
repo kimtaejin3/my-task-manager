@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 import { overlay } from "overlay-kit";
 
 import typography from "../../styles/font";
-import Dialog from "../dialog/dialog";
 import TaskForm from "../forms/task-form";
+import Dialog from "../shared/dialog";
 import TagList from "../shared/tag-list";
 
 import OptionalBackground from "./optional-background";

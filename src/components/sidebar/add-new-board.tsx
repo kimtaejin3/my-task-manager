@@ -2,8 +2,8 @@ import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { overlay } from "overlay-kit";
 
-import Dialog from "../dialog/dialog";
 import AddNewBoardForm from "../forms/add-new-board-form";
+import Dialog from "../shared/dialog";
 import Icon from "../shared/icon";
 
 import SidebarButton from "./sidebar-button";

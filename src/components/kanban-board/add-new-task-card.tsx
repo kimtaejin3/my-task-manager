@@ -4,8 +4,8 @@ import { overlay } from "overlay-kit";
 
 import colors from "../../styles/color";
 import typography from "../../styles/font";
-import Dialog from "../dialog/dialog";
 import TaskForm from "../forms/task-form";
+import Dialog from "../shared/dialog";
 import Icon from "../shared/icon";
 
 export default function AddNewTaskCard({ show }: { show: boolean }) {
