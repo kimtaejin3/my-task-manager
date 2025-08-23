@@ -7,7 +7,7 @@ import Dialog from "../dialog/dialog";
 import TaskForm from "../forms/task-form";
 import TagList from "../shared/tag-list";
 
-import Background from "./background";
+import OptionalBackground from "./optional-background";
 
 import type { Task } from "../../types/task";
 
@@ -26,6 +26,8 @@ export default function TaskCard(task: TaskCardProps) {
             <Dialog isOpen={isOpen} close={unmount} theme={theme}>
               <Dialog.Wrapper>
                 <Dialog.Header title="Task Details" />
+                {/* 합성 컴포넌트 덕분에 theme에 대한 prop drilling 문제가 어느정도 해소됨 */}
+                {/* 구현을 사용처인 이곳에서 바로 드러낼 수 있는 거도 장점 */}
                 <TaskForm theme={theme} task={task} onHideModal={unmount} />
               </Dialog.Wrapper>
             </Dialog>
@@ -34,7 +36,7 @@ export default function TaskCard(task: TaskCardProps) {
       }}
     >
       <S.Content>
-        <Background background={background} />
+        <OptionalBackground background={background} />
         <S.Title>{title}</S.Title>
         <TagList tags={tags} />
       </S.Content>

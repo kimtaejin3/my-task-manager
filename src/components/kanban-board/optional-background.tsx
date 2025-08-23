@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export default function Background({
+export default function OptionalBackground({
   background,
 }: {
   background: string | null;
