@@ -13,6 +13,7 @@ const colors = {
   blueLight: "#DEE9FC",
   blue: "#3662E3",
   blueSurface: "#F0F6FE",
+  blueHard: "#2A4DD0",
 
   // Yellow colors
   yellowPrimary: "#C18D30",
@@ -43,6 +44,7 @@ const colors = {
   logoGreen: "#C7F5D3",
   logoBlue: "#C4DAFB",
   logoPurple: "#E6D6FC",
+
   selectionRed: "#ff6363",
 };
 

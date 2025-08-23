@@ -3,6 +3,7 @@ import { Droppable } from "@hello-pangea/dnd";
 
 import { TASK_STATUS_CONFIG } from "../../constants/task";
 
+import AddNewTaskCard from "./add-new-task-card";
 import ColumnHeader from "./column-header";
 import DraggableTaskCard from "./draggable-task-card";
 
@@ -14,13 +15,10 @@ interface TaskColumnProps {
 }
 
 export default function TaskColumn({ status, tasks }: TaskColumnProps) {
+  const { title, color } = TASK_STATUS_CONFIG[status];
   return (
     <S.Flex>
-      <ColumnHeader
-        title={TASK_STATUS_CONFIG[status].title}
-        count={tasks.length}
-        color={TASK_STATUS_CONFIG[status].color}
-      />
+      <ColumnHeader title={title} count={tasks.length} color={color} />
       <Droppable droppableId={status}>
         {(provided) => (
           <S.TaskList ref={provided.innerRef} {...provided.droppableProps}>
@@ -28,6 +26,7 @@ export default function TaskColumn({ status, tasks }: TaskColumnProps) {
               <DraggableTaskCard key={task.id} task={task} index={index} />
             ))}
             {provided.placeholder}
+            <AddNewTaskCard show={status === "backlog"} />
           </S.TaskList>
         )}
       </Droppable>

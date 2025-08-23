@@ -46,6 +46,7 @@ function KanbanBoard() {
 
   const currentBoardId = selectedBoardId ?? boardList[0].id;
 
+  // 원래는 useSuspenseQuery를 사용했지만 board 전환시 사용성 향상을 위해 useQuery를 사용 (이전 데이터 유지 위해)
   const { data: tasks, isLoading: isTasksLoading } = useQuery(
     taskListQueryOptions(currentBoardId)
   );

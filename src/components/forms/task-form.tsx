@@ -21,17 +21,21 @@ import type { Theme } from "@emotion/react";
 
 interface TaskFormProps {
   theme: Theme;
-  task: Task;
+  task: Task | null;
   onHideModal: () => void;
 }
 
+const defaultFormData: FormData = {
+  taskTitle: "",
+  background: null,
+  status: "backlog",
+  tags: [],
+};
+
 export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
-  const [formData, setFormData] = useState({
-    taskTitle: task.title,
-    background: task.background,
-    status: task.status,
-    tags: task.tags,
-  });
+  const [formData, setFormData] = useState(
+    createFormData(task, defaultFormData)
+  );
 
   // TODO: Dropdown logic 전면 리팩토링 필요
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -166,6 +170,27 @@ export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
     </Form>
   );
 }
+
+type FormData = {
+  taskTitle: string;
+  background: string | null;
+  status: Status;
+  tags: string[];
+};
+
+const createFormData = (
+  task: Task | null,
+  defaultFormData: FormData
+): FormData => {
+  if (!task) return defaultFormData;
+
+  return {
+    taskTitle: task.title,
+    background: task.background,
+    status: task.status,
+    tags: task.tags,
+  };
+};
 
 const S = {
   DropdownContainer: styled.div<{ theme: Theme }>`

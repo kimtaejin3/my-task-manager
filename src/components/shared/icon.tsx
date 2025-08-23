@@ -1,3 +1,4 @@
+import AddNoneCircleIcon from "../../assets/svgs/add-none-circle.svg?react";
 import AddIcon from "../../assets/svgs/add.svg?react";
 import CheckIcon from "../../assets/svgs/check.svg?react";
 import CloseIcon from "../../assets/svgs/close.svg?react";
@@ -8,7 +9,14 @@ import SunIcon from "../../assets/svgs/sun.svg?react";
 import type { Theme } from "@emotion/react";
 
 interface IconProps {
-  svgName: "sun" | "moon" | "menu" | "close" | "add" | "check";
+  svgName:
+    | "sun"
+    | "moon"
+    | "menu"
+    | "close"
+    | "add"
+    | "check"
+    | "add-none-circle";
   size?: number;
   theme?: Theme;
   color?: string;
@@ -59,6 +67,14 @@ export default function Icon({ svgName, size = 24, theme, color }: IconProps) {
       case "add":
         return (
           <AddIcon
+            fill={finalColor}
+            stroke={finalColor}
+            style={{ width: size, height: size }}
+          />
+        );
+      case "add-none-circle":
+        return (
+          <AddNoneCircleIcon
             fill={finalColor}
             stroke={finalColor}
             style={{ width: size, height: size }}
