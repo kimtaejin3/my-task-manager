@@ -16,6 +16,7 @@ interface TaskCardProps extends Task {}
 export default function TaskCard(task: TaskCardProps) {
   const { title, tags, background } = task;
 
+  //  overlay를 사용할떄 다른 컴포넌트처럼 스타일 컴포넌트안에서 theme을 불러오지 못하기 때문에 이렇게 넘겨줘야 한다.
   const theme = useTheme();
 
   return (
