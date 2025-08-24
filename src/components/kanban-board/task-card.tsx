@@ -24,14 +24,15 @@ export default function TaskCard(task: TaskCardProps) {
       onClick={() => {
         overlay.open(({ isOpen, unmount }) => {
           return (
-            <Dialog isOpen={isOpen} close={unmount} theme={theme}>
-              <Dialog.Wrapper>
-                <Dialog.Header title="Task Details" />
-                {/* 합성 컴포넌트 덕분에 theme에 대한 prop drilling 문제가 어느정도 해소됨 */}
-                {/* 구현을 사용처인 이곳에서 바로 드러낼 수 있는 거도 장점 */}
+            <Dialog
+              isOpen={isOpen}
+              close={unmount}
+              theme={theme}
+              title="Task Details"
+              renderContent={() => (
                 <TaskForm theme={theme} task={task} onHideModal={unmount} />
-              </Dialog.Wrapper>
-            </Dialog>
+              )}
+            />
           );
         });
       }}

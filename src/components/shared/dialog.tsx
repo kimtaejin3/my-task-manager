@@ -24,13 +24,13 @@ export default function Dialog({
 
   return (
     <S.Dialog onClick={close}>
-      <S.Header>
-        <S.HeaderTitle>{title}</S.HeaderTitle>
-        <button onClick={close}>
-          <Icon svgName="close" size={24} theme={theme} />
-        </button>
-      </S.Header>
       <S.Wrapper theme={theme} onClick={(e) => e.stopPropagation()}>
+        <S.Header>
+          <S.HeaderTitle>{title}</S.HeaderTitle>
+          <button onClick={close}>
+            <Icon svgName="close" size={24} theme={theme} />
+          </button>
+        </S.Header>
         {renderContent()}
       </S.Wrapper>
     </S.Dialog>

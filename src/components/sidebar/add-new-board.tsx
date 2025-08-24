@@ -17,12 +17,15 @@ export default function AddNewBoard() {
         onClick={() => {
           overlay.open(({ isOpen, unmount }) => {
             return (
-              <Dialog isOpen={isOpen} close={unmount} theme={theme}>
-                <Dialog.Wrapper>
-                  <Dialog.Header title="New Board" />
+              <Dialog
+                isOpen={isOpen}
+                close={unmount}
+                theme={theme}
+                title="New Board"
+                renderContent={() => (
                   <AddNewBoardForm theme={theme} onHideModal={unmount} />
-                </Dialog.Wrapper>
-              </Dialog>
+                )}
+              />
             );
           });
         }}
