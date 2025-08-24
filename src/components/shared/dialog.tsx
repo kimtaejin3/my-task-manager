@@ -1,5 +1,3 @@
-import { createContext, useContext } from "react";
-
 import styled from "@emotion/styled";
 
 import typography from "../../styles/font";
@@ -11,70 +9,33 @@ interface DialogProps {
   isOpen: boolean;
   close: () => void;
   theme: Theme;
-  children: React.ReactNode;
+  title: string;
+  renderContent: () => React.ReactNode;
 }
-
-type DialogContextType = {
-  isOpen: boolean;
-  close: () => void;
-  theme: Theme;
-};
-
-export const DialogContext = createContext<DialogContextType | undefined>(
-  undefined
-);
 
 export default function Dialog({
   isOpen,
   close,
   theme,
-  children,
+  title,
+  renderContent,
 }: DialogProps) {
   if (!isOpen) return null;
 
   return (
-    <DialogContext.Provider value={{ isOpen, close, theme }}>
-      <S.Dialog onClick={close}>{children}</S.Dialog>
-    </DialogContext.Provider>
+    <S.Dialog onClick={close}>
+      <S.Header>
+        <S.HeaderTitle>{title}</S.HeaderTitle>
+        <button onClick={close}>
+          <Icon svgName="close" size={24} theme={theme} />
+        </button>
+      </S.Header>
+      <S.Wrapper theme={theme} onClick={(e) => e.stopPropagation()}>
+        {renderContent()}
+      </S.Wrapper>
+    </S.Dialog>
   );
 }
-
-function useDialogContext() {
-  const context = useContext(DialogContext);
-
-  if (!context) {
-    throw new Error("useDialogContext must be used within a Dialog");
-  }
-
-  return context;
-}
-
-Dialog.Wrapper = function DialogWrapper({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const { theme } = useDialogContext();
-
-  return (
-    <S.Wrapper theme={theme} onClick={(e) => e.stopPropagation()}>
-      {children}
-    </S.Wrapper>
-  );
-};
-
-Dialog.Header = function DialogHeader({ title }: { title: string }) {
-  const { theme, close } = useDialogContext();
-
-  return (
-    <S.Header>
-      <S.HeaderTitle>{title}</S.HeaderTitle>
-      <button onClick={close}>
-        <Icon svgName="close" size={24} theme={theme} />
-      </button>
-    </S.Header>
-  );
-};
 
 const S = {
   Dialog: styled.div`
