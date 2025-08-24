@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, createContext, useContext } from "react";
 
 import styled from "@emotion/styled";
 
@@ -6,14 +6,21 @@ import typography from "../../styles/font";
 
 import type { Theme } from "@emotion/react";
 
+//context
+interface DropdownContextType {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  theme: Theme;
+}
+
+const DropdownContext = createContext<DropdownContextType | null>(null);
+
 export default function Dropdown({
   theme,
-  renderHeader,
-  renderList,
+  children,
 }: {
   theme: Theme;
-  renderHeader: () => React.ReactNode;
-  renderList: () => React.ReactNode;
+  children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -36,14 +43,68 @@ export default function Dropdown({
 
   return (
     <S.DropdownContainer ref={dropdownRef} theme={theme}>
-      <S.DropdownHeader onClick={() => setIsOpen(!isOpen)} theme={theme}>
-        {renderHeader()}
-      </S.DropdownHeader>
-
-      {isOpen && <S.DropdownList theme={theme}>{renderList()}</S.DropdownList>}
+      <DropdownContext.Provider value={{ isOpen, setIsOpen, theme }}>
+        {children}
+      </DropdownContext.Provider>
     </S.DropdownContainer>
   );
 }
+
+export const useDropdown = () => {
+  const context = useContext(DropdownContext);
+  if (!context) {
+    throw new Error("useDropdown must be used within a Dropdown component");
+  }
+  return context;
+};
+
+Dropdown.Header = function DropdownHeader({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { isOpen, setIsOpen, theme } = useDropdown();
+
+  return (
+    <S.DropdownHeader onClick={() => setIsOpen(!isOpen)} theme={theme}>
+      {children}
+    </S.DropdownHeader>
+  );
+};
+
+Dropdown.List = function DropdownList({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { isOpen, theme } = useDropdown();
+
+  if (!isOpen) return null;
+
+  return <S.DropdownList theme={theme}>{children}</S.DropdownList>;
+};
+
+Dropdown.Item = function DropdownItem({
+  onClick,
+  children,
+}: {
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  const { theme, setIsOpen } = useDropdown();
+
+  return (
+    <S.DropdownItem
+      onClick={() => {
+        onClick();
+        setIsOpen(false);
+      }}
+      theme={theme}
+    >
+      {children}
+    </S.DropdownItem>
+  );
+};
 
 const S = {
   DropdownContainer: styled.div<{ theme: Theme }>`
@@ -83,5 +144,17 @@ const S = {
     max-height: 200px;
     overflow-y: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  `,
+
+  DropdownItem: styled.li<{ theme: Theme }>`
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    cursor: pointer;
+    ${typography.bold14}
+
+    &:hover {
+      background-color: ${(props) => props.theme.themeValue.secondary};
+    }
   `,
 };

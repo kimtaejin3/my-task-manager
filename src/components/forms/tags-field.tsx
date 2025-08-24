@@ -5,7 +5,6 @@ import Tag from "../shared/tag";
 import TagList from "../shared/tag-list";
 
 import Dropdown from "./dropdown";
-import DropdownItem from "./dropdown-item";
 import Label from "./label";
 
 interface TagsFieldProps {
@@ -32,23 +31,18 @@ export default function TagsField({
       <Label id="tagsLabel" htmlFor="tags">
         Tags
       </Label>
-      <Dropdown
-        theme={theme}
-        renderHeader={() => <TagList tags={selectedTags} />}
-        renderList={() => (
-          <>
-            {["concept", "technical", "design", "front-end"].map((tag) => (
-              <DropdownItem
-                key={tag}
-                theme={theme}
-                onClick={() => handleTagClick(tag)}
-              >
-                <Tag name={tag} tagStyles={getTagStyles({ tagName: tag })} />
-              </DropdownItem>
-            ))}
-          </>
-        )}
-      />
+      <Dropdown theme={theme}>
+        <Dropdown.Header>
+          <TagList tags={selectedTags} />
+        </Dropdown.Header>
+        <Dropdown.List>
+          {["concept", "technical", "design", "front-end"].map((tag) => (
+            <Dropdown.Item key={tag} onClick={() => handleTagClick(tag)}>
+              <Tag name={tag} tagStyles={getTagStyles({ tagName: tag })} />
+            </Dropdown.Item>
+          ))}
+        </Dropdown.List>
+      </Dropdown>
     </fieldset>
   );
 }

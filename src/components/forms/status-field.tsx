@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 import { TASK_STATUS_CONFIG } from "../../constants/task";
 
 import Dropdown from "./dropdown";
-import DropdownItem from "./dropdown-item";
 import Label from "./label";
 
 import type { Status } from "../../types/task";
@@ -27,37 +26,33 @@ export default function StatusField({
         Status
       </Label>
 
-      <Dropdown
-        theme={theme}
-        renderHeader={() => (
+      <Dropdown theme={theme}>
+        <Dropdown.Header>
           <>
             <S.StatusIndicator
               color={TASK_STATUS_CONFIG[selectedStatus].color}
             />
             <span>{TASK_STATUS_CONFIG[selectedStatus].title}</span>
           </>
-        )}
-        renderList={() => (
-          <>
-            {(
-              Object.entries(TASK_STATUS_CONFIG) as Entries<
-                typeof TASK_STATUS_CONFIG
-              >
-            ).map(([key, { color, title }]) => (
-              <DropdownItem
-                key={key}
-                onClick={() => {
-                  onChange(key);
-                }}
-                theme={theme}
-              >
-                <S.StatusIndicator color={color} />
-                <span>{title}</span>
-              </DropdownItem>
-            ))}
-          </>
-        )}
-      />
+        </Dropdown.Header>
+        <Dropdown.List>
+          {(
+            Object.entries(TASK_STATUS_CONFIG) as Entries<
+              typeof TASK_STATUS_CONFIG
+            >
+          ).map(([key, { color, title }]) => (
+            <Dropdown.Item
+              key={key}
+              onClick={() => {
+                onChange(key);
+              }}
+            >
+              <S.StatusIndicator color={color} />
+              <span>{title}</span>
+            </Dropdown.Item>
+          ))}
+        </Dropdown.List>
+      </Dropdown>
     </fieldset>
   );
 }
