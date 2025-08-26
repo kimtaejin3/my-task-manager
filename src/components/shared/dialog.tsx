@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 
+import useEscapeKey from "../../hooks/useEscapeKey";
 import typography from "../../styles/font";
 import Icon from "../shared/icon";
 
@@ -20,6 +21,8 @@ export default function Dialog({
   title,
   renderContent,
 }: DialogProps) {
+  useEscapeKey(close);
+
   if (!isOpen) return null;
 
   return (
