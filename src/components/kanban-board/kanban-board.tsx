@@ -7,7 +7,7 @@ import { DragDropContext } from "@hello-pangea/dnd";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 
-import { useTaskColumns } from "../../hooks/useTaskStatus";
+import { useTaskColumns } from "../../hooks/use-task-status";
 import { selectedBoardIdAtom } from "../../jotai/atom/board";
 import { boardListQueryOptions } from "../../queryOptions/board";
 import { taskListQueryOptions } from "../../queryOptions/task";

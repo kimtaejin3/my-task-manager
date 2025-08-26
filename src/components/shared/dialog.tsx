@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-import useEscapeKey from "../../hooks/useEscapeKey";
+import useEscapeKey from "../../hooks/use-escape-key";
 import typography from "../../styles/font";
 import Icon from "../shared/icon";
 
