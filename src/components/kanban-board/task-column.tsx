@@ -16,6 +16,9 @@ interface TaskColumnProps {
 
 export default function TaskColumn({ status, tasks }: TaskColumnProps) {
   const { title, color } = TASK_STATUS_CONFIG[status];
+
+  // TODO: Draggable, Droppable 분리, DroppableTaskList 만들기
+  // 사용하는 곳에서 droppable에 대한 세부 구현사항을 노출할 필요가 없을것 같다.
   return (
     <S.Flex>
       <ColumnHeader title={title} count={tasks.length} color={color} />
