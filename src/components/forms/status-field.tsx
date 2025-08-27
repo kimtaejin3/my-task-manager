@@ -32,7 +32,7 @@ export default function StatusField({
             <S.StatusIndicator
               color={TASK_STATUS_CONFIG[selectedStatus].color}
             />
-            <span>{TASK_STATUS_CONFIG[selectedStatus].title}</span>
+            {TASK_STATUS_CONFIG[selectedStatus].title}
           </>
         </Dropdown.Header>
         <Dropdown.List>
@@ -48,7 +48,7 @@ export default function StatusField({
               }}
             >
               <S.StatusIndicator color={color} />
-              <span>{title}</span>
+              {title}
             </Dropdown.Item>
           ))}
         </Dropdown.List>
@@ -57,6 +57,7 @@ export default function StatusField({
   );
 }
 
+// TODO: StatusIndicator 컴포넌트화
 const S = {
   StatusIndicator: styled.div<{ color: string }>`
     width: 12px;

@@ -3,6 +3,7 @@ type Tag = "concept" | "technical" | "design" | "front-end";
 
 type Task = {
   id: number;
+  board_id: number;
   title: string;
   status: Status;
   background: string | null;
