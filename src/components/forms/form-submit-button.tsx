@@ -6,11 +6,15 @@ import Icon from "../shared/icon";
 
 type FormSubmitButtonProps = {
   children: React.ReactNode;
+  disabled?: boolean;
 };
 
-export default function FormSubmitButton({ children }: FormSubmitButtonProps) {
+export default function FormSubmitButton({
+  children,
+  disabled,
+}: FormSubmitButtonProps) {
   return (
-    <S.SubmitButton type="submit">
+    <S.SubmitButton type="submit" disabled={disabled}>
       {children}
       <Icon svgName="check" size={24} color="red" />
     </S.SubmitButton>

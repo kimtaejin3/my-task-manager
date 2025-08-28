@@ -55,6 +55,7 @@ function KanbanBoard() {
   const emptyTasks: Task[] = useMemo(() => [], []);
   const { columns, updateTaskStatus } = useTaskColumns(tasks ?? emptyTasks);
 
+  //초기로딩시
   if (isTasksLoading) return <TaskListLoading />;
 
   return (

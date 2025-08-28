@@ -6,8 +6,8 @@ import colors from "../../styles/color";
 import Label from "./label";
 
 type BoardLogoSelectorProps = {
-  selectedLogo: number;
-  onChange: (logoId: number) => void;
+  selectedLogo: string;
+  onChange: (logoId: string) => void;
 };
 
 export default function BoardLogoSelector({
@@ -24,8 +24,8 @@ export default function BoardLogoSelector({
           <BoardLogoInput
             key={logo.id}
             logo={logo}
-            checked={selectedLogo === logo.id}
-            onChange={(e) => onChange(Number(e.target.value))}
+            checked={selectedLogo === logo.emoji}
+            onChange={(e) => onChange(e.target.value)}
           />
         ))}
       </S.Grid>
@@ -48,7 +48,7 @@ function BoardLogoInput({
         type="radio"
         id={`logo-${logo.id}`}
         name="boardLogo"
-        value={logo.id}
+        value={logo.emoji}
         checked={checked}
         onChange={onChange}
       />

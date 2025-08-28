@@ -1,7 +1,14 @@
+import React from "react";
+
 import styled from "@emotion/styled";
 
-export default function Form({ children }: { children: React.ReactNode }) {
-  return <S.Form>{children}</S.Form>;
+interface FormProps {
+  children: React.ReactNode;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+export default function Form({ children, onSubmit }: FormProps) {
+  return <S.Form onSubmit={onSubmit}>{children}</S.Form>;
 }
 
 const S = {
