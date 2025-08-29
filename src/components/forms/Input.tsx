@@ -11,6 +11,7 @@ interface InputProps {
   id: string;
   placeholder: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
 }
 
 export default function Input({
@@ -20,6 +21,7 @@ export default function Input({
   id,
   placeholder,
   onChange,
+  name,
 }: InputProps) {
   return (
     <S.Input
@@ -29,6 +31,7 @@ export default function Input({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      name={name}
     />
   );
 }

@@ -7,10 +7,12 @@ export default function BoardNameField({
   theme,
   value,
   onChange,
+  name,
 }: {
   theme: Theme;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
 }) {
   return (
     <fieldset>
@@ -23,6 +25,7 @@ export default function BoardNameField({
         type="text"
         id="boardName"
         placeholder="e.g: Default Board"
+        name={name}
         value={value}
         onChange={onChange}
       />

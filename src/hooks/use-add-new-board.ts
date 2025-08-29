@@ -9,7 +9,7 @@ export default function useAddNewBoard() {
 
   return useMutation({
     mutationKey: ["create-board"],
-    mutationFn: (board: Board) => createBoard(board),
+    mutationFn: (board: Omit<Board, "id">) => createBoard(board),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["board-list"],

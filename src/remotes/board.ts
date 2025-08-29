@@ -10,7 +10,9 @@ export const getBoardList = async () => {
   return data as Board[];
 };
 
-export const createBoard = async (board: Board) => {
+//TODO: Omit<Board, "id"> -> CreateBoardRequestType 이런식으로 수정. 다른 부분도 마찬가지
+
+export const createBoard = async (board: Omit<Board, "id">) => {
   const { data, error } = await supabase
     .from("board")
     .insert(board as never)

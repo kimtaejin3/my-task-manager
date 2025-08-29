@@ -2,5 +2,4 @@ export type Board = {
   id: number;
   name: string;
   emoji: string;
-  color: string;
 };

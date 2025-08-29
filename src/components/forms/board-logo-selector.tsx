@@ -7,11 +7,13 @@ import Label from "./label";
 
 type BoardLogoSelectorProps = {
   selectedLogo: string;
-  onChange: (logoId: string) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
 };
 
 export default function BoardLogoSelector({
   selectedLogo,
+  name,
   onChange,
 }: BoardLogoSelectorProps) {
   return (
@@ -24,8 +26,10 @@ export default function BoardLogoSelector({
           <BoardLogoInput
             key={logo.id}
             logo={logo}
+            type="radio"
             checked={selectedLogo === logo.emoji}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={onChange}
+            name={name}
           />
         ))}
       </S.Grid>
@@ -37,20 +41,24 @@ function BoardLogoInput({
   logo,
   checked,
   onChange,
+  name,
+  type,
 }: {
   logo: { id: number; emoji: string; color: string };
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+  type: string;
 }) {
   return (
     <S.LogoOption key={logo.id}>
       <S.LogoInput
-        type="radio"
         id={`logo-${logo.id}`}
-        name="boardLogo"
+        name={name}
         value={logo.emoji}
         checked={checked}
         onChange={onChange}
+        type={type}
       />
       <S.LogoLabel
         isSelected={checked}
