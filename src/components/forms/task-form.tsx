@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+import { useAtomValue } from "jotai";
+
+import useAddNewTask from "../../hooks/use-add-new-task";
+import { selectedBoardIdAtom } from "../../jotai/atom/board";
+
 import BackgroundField from "./background-field";
 import Form from "./form";
 import FormButtons from "./form-buttons";
@@ -9,7 +14,7 @@ import StatusField from "./status-field";
 import TagsField from "./tags-field";
 import TaskTitleField from "./task-title-field";
 
-import type { Task, Status } from "../../types/task";
+import type { Task, TaskFormType } from "../../types/task";
 import type { Theme } from "@emotion/react";
 
 interface TaskFormProps {
@@ -18,11 +23,12 @@ interface TaskFormProps {
   onHideModal: () => void;
 }
 
-const defaultFormData: TaskFormData = {
-  taskTitle: "",
+const defaultFormData: TaskFormType = {
+  title: "",
   background: null,
   status: "backlog",
   tags: [],
+  board_id: 0,
 };
 
 export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
@@ -30,8 +36,28 @@ export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
     createFormData(task, defaultFormData)
   );
 
+  // TODO: BoardId null 예외 처리를 어떻게 할지 , 그냥 빈문자열 주면 될지 모르겠음
+  const currentBoardId = useAtomValue(selectedBoardIdAtom);
+
+  const { mutate, error } = useAddNewTask({ boardId: currentBoardId });
+
+  if (error) {
+    //TODO: 토스트 띄우기
+    console.error("Error adding new task:", error);
+  }
+
   return (
-    <Form>
+    <Form
+      onSubmit={(e) => {
+        e.preventDefault();
+        mutate({
+          ...formData,
+          //에러처리를 했기 때문에 있다고 가정
+          board_id: currentBoardId!,
+        });
+        onHideModal();
+      }}
+    >
       <BackgroundField
         theme={theme}
         background={formData.background}
@@ -39,10 +65,8 @@ export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
       />
       <TaskTitleField
         theme={theme}
-        value={formData.taskTitle}
-        onChange={(e) =>
-          setFormData({ ...formData, taskTitle: e.target.value })
-        }
+        value={formData.title}
+        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
       />
       <StatusField
         theme={theme}
@@ -52,7 +76,7 @@ export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
       <TagsField
         theme={theme}
         selectedTags={formData.tags}
-        onChange={(tags) => setFormData({ ...formData, tags })}
+        onChange={(tags: string[]) => setFormData({ ...formData, tags })}
       />
 
       <FormButtons>
@@ -65,23 +89,17 @@ export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
   );
 }
 
-type TaskFormData = {
-  taskTitle: string;
-  background: string | null;
-  status: Status;
-  tags: string[];
-};
-
 const createFormData = (
   task: Task | null,
-  defaultFormData: TaskFormData
-): TaskFormData => {
+  defaultFormData: TaskFormType
+): TaskFormType => {
   if (!task) return defaultFormData;
 
   return {
-    taskTitle: task.title,
+    title: task.title,
     background: task.background,
     status: task.status,
     tags: task.tags,
+    board_id: task.board_id,
   };
 };

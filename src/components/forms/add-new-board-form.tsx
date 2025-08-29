@@ -30,6 +30,7 @@ export default function AddNewBoardForm({
 
   const { mutate, isPending } = useAddNewBoard();
   // TODO: Form validation
+  // Formik이나 react hook form 사용하기
   return (
     <Form
       onSubmit={(e) => {

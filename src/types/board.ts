@@ -1,5 +1,5 @@
 export type Board = {
-  id: string;
+  id: number;
   name: string;
   emoji: string;
   color: string;

@@ -1,5 +1,4 @@
 type Status = "backlog" | "in-progress" | "in-review" | "completed";
-type Tag = "concept" | "technical" | "design" | "front-end";
 
 type Task = {
   id: number;
@@ -7,9 +6,11 @@ type Task = {
   title: string;
   status: Status;
   background: string | null;
-  tags: Tag[];
+  tags: string[];
 };
+
+type TaskFormType = Omit<Task, "id">;
 
 type TasksByStatus = Record<Status, Task[]>;
 
-export type { Status, Tag, Task, TasksByStatus };
+export type { Status, Task, TaskFormType, TasksByStatus };

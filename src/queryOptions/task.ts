@@ -2,14 +2,10 @@ import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 
 import { getTaskList } from "../remotes/task";
 
-export const taskListQueryOptions = (boardId: string) => {
+export const taskListQueryOptions = (boardId: number) => {
   return queryOptions({
     queryKey: ["task-list", boardId],
-    queryFn: () => getTaskList(boardId),
-    select: (data) => {
-      return data.tasks;
-    },
-    notifyOnChangeProps: ["data", "error"],
+    queryFn: () => getTaskList({ boardId }),
     placeholderData: keepPreviousData,
   });
 };
