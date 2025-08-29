@@ -1,12 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { groupBy } from "es-toolkit";
+import { useAtomValue } from "jotai";
+
+import { selectedBoardIdAtom } from "../jotai/atom/board";
+
+import useUpdateTask from "./use-update-task";
 
 import type { Status, Task, TasksByStatus } from "../types/task";
 import type { Entries } from "../types/utils";
 import type { DropResult } from "@hello-pangea/dnd";
 
+//TODO: 코드 리팩토링
 export function useTaskColumns(tasks: Task[]) {
+  const selectedBoardId = useAtomValue(selectedBoardIdAtom);
+  const updateTask = useUpdateTask({ boardId: selectedBoardId });
+
   const calculatedColumns = useMemo(
     () =>
       createTaskColumns({
@@ -46,10 +55,17 @@ export function useTaskColumns(tasks: Task[]) {
     const [removeTaskItem] = sourceTasks.splice(sourceStatus.index, 1);
     destinationTasks.splice(destinationStatus.index, 0, removeTaskItem);
 
+    //for ui update
     setColumns({
       ...columns,
       [sourceStatus.droppableId]: sourceTasks,
       [destinationStatus.droppableId]: destinationTasks,
+    });
+
+    //for db update
+    updateTask.mutate({
+      id: removeTaskItem.id,
+      status: destinationStatus.droppableId,
     });
   };
 

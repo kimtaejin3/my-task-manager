@@ -24,3 +24,20 @@ export const createTask = async (task: TaskFormType) => {
 
   return data as Task;
 };
+
+export const updateTask = async (
+  boardId: number,
+  //TODO: 타입
+  task: { id: number } & Partial<Omit<Task, "id">>
+) => {
+  const { data, error } = await supabase
+    .from("task")
+    .update(task as never)
+    .eq("board_id", boardId)
+    .eq("id", task.id)
+    .select()
+    .single();
+  if (error) throw error;
+
+  return data as Task;
+};
