@@ -2,7 +2,9 @@ import { supabase } from "../utils/supabase";
 
 import type { TaskFormType, Task } from "../types/task";
 
-export const getTaskList = async ({ boardId }: { boardId: number }) => {
+export const getTaskList = async ({ boardId }: { boardId: number | null }) => {
+  if (!boardId) return [];
+
   const { data, error } = await supabase
     .from("task")
     .select("*")

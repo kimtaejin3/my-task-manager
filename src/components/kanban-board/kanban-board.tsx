@@ -5,10 +5,9 @@ import { ErrorBoundary } from "react-error-boundary";
 import styled from "@emotion/styled";
 import { DragDropContext } from "@hello-pangea/dnd";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { useAtomValue } from "jotai";
 
+import useSelectedBoardId from "../../hooks/use-selected-board-id";
 import { useTaskColumns } from "../../hooks/use-task-status";
-import { selectedBoardIdAtom } from "../../jotai/atom/board";
 import { boardListQueryOptions } from "../../queryOptions/board";
 import { taskListQueryOptions } from "../../queryOptions/task";
 import Error from "../shared/error";
@@ -39,23 +38,18 @@ export default function KanbanBoardContainer() {
 }
 
 function KanbanBoard() {
-  const selectedBoardId = useAtomValue(selectedBoardIdAtom);
-
-  // currentBoardId, taskListQueryOptions 관련 코드를 간소화하기 위함
   const { data: boardList } = useSuspenseQuery(boardListQueryOptions);
-
-  const currentBoardId = selectedBoardId ?? boardList[0].id;
+  const { selectedBoardId } = useSelectedBoardId(boardList[0].id);
 
   // 원래는 useSuspenseQuery를 사용했지만 board 전환시 사용성 향상을 위해 useQuery를 사용 (이전 데이터 유지 위해)
   const { data: tasks, isLoading: isTasksLoading } = useQuery(
-    taskListQueryOptions(currentBoardId)
+    taskListQueryOptions(selectedBoardId)
   );
 
   // 불필요한 랜더링 방지
   const emptyTasks: Task[] = useMemo(() => [], []);
   const { columns, updateTaskStatus } = useTaskColumns(tasks ?? emptyTasks);
 
-  //초기로딩시
   if (isTasksLoading) return <TaskListLoading />;
 
   return (
