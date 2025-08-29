@@ -3,18 +3,26 @@ import styled from "@emotion/styled";
 import { LOGOS } from "../../constants/board";
 import colors from "../../styles/color";
 
+import FieldError from "./field-error";
 import Label from "./label";
+
+import type { Falsey } from "../../types/utils";
 
 type BoardLogoSelectorProps = {
   selectedLogo: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
+  error: {
+    showError: boolean | Falsey;
+    errorMessage: string | undefined;
+  };
 };
 
 export default function BoardLogoSelector({
   selectedLogo,
   name,
   onChange,
+  error,
 }: BoardLogoSelectorProps) {
   return (
     <fieldset>
@@ -33,6 +41,7 @@ export default function BoardLogoSelector({
           />
         ))}
       </S.Grid>
+      {error.showError && <FieldError errorMessage={error.errorMessage} />}
     </fieldset>
   );
 }

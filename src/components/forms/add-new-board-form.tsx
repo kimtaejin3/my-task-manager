@@ -1,8 +1,8 @@
 import { type Theme } from "@emotion/react";
 import { Formik } from "formik";
+import * as Yup from "yup";
 
 import useAddNewBoard from "../../hooks/use-add-new-board";
-import { type Board } from "../../types/board";
 
 import BoardLogoSelector from "./board-logo-selector";
 import BoardNameField from "./board-name-field";
@@ -16,22 +16,18 @@ interface AddNewBoardFormProps {
   onHideModal: () => void;
 }
 
-const validate = (values: Omit<Board, "id">) => {
-  const errors: Record<string, string> = {};
-  if (!values.name) {
-    errors.name = "Required";
-  }
-  if (!values.emoji) {
-    errors.emoji = "Required";
-  }
-  return errors;
-};
+const BoardSchema = Yup.object({
+  name: Yup.string()
+    .required("Required")
+    .max(50, "Name must be 50 characters or less"),
+  emoji: Yup.string().required("Required"),
+});
 
 export default function AddNewBoardForm({
   theme,
   onHideModal,
 }: AddNewBoardFormProps) {
-  const { mutate, isPending } = useAddNewBoard();
+  const { mutate } = useAddNewBoard();
 
   return (
     <Formik
@@ -39,31 +35,49 @@ export default function AddNewBoardForm({
         name: "",
         emoji: "",
       }}
-      validate={validate}
-      onSubmit={(values) => mutate(values)}
+      validationSchema={BoardSchema}
+      onSubmit={(values, { setSubmitting }) => {
+        setSubmitting(true);
+        mutate(values, {
+          onSuccess: () => {
+            onHideModal();
+            setSubmitting(false);
+          },
+        });
+      }}
     >
-      {({ values, errors, touched, handleChange, handleSubmit }) => (
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleSubmit,
+        handleBlur,
+        isSubmitting,
+      }) => (
         <Form onSubmit={handleSubmit}>
           <BoardNameField
             theme={theme}
             value={values.name}
             name="name"
+            onBlur={handleBlur}
             onChange={handleChange}
+            error={{
+              showError: errors.name && touched.name,
+              errorMessage: errors.name,
+            }}
           />
-
-          {errors.name && touched.name && (
-            <div className="error">{errors.name}</div>
-          )}
           <BoardLogoSelector
             name="emoji"
             selectedLogo={values.emoji}
             onChange={handleChange}
+            error={{
+              showError: errors.emoji && touched.emoji,
+              errorMessage: errors.emoji,
+            }}
           />
-          {errors.emoji && touched.emoji && (
-            <div className="error">{errors.emoji}</div>
-          )}
           <FormButtons>
-            <FormSubmitButton disabled={isPending}>
+            <FormSubmitButton disabled={isSubmitting}>
               Create Board
             </FormSubmitButton>
             <FormCancelButton onClick={onHideModal} theme={theme}>

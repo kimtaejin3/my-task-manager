@@ -12,6 +12,7 @@ interface InputProps {
   placeholder: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 export default function Input({
@@ -22,6 +23,7 @@ export default function Input({
   placeholder,
   onChange,
   name,
+  onBlur,
 }: InputProps) {
   return (
     <S.Input
@@ -30,6 +32,7 @@ export default function Input({
       id={id}
       placeholder={placeholder}
       value={value}
+      onBlur={onBlur}
       onChange={onChange}
       name={name}
     />
