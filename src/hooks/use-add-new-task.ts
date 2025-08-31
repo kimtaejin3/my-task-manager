@@ -11,7 +11,8 @@ export default function useAddNewTask({ boardId }: { boardId: number | null }) {
 
   return useMutation({
     mutationKey: ["create-task"],
-    mutationFn: (task: TaskFormType) => createTask(task),
+    mutationFn: (task: TaskFormType) =>
+      createTask({ ...task, board_id: boardId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["task-list", boardId],

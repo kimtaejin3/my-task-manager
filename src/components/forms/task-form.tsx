@@ -25,7 +25,10 @@ interface TaskFormProps {
 }
 
 export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
+  const isNewTask = task === null;
   const currentBoardId = useAtomValue(selectedBoardIdAtom);
+
+  console.log("currentBoardId", currentBoardId);
 
   const { mutate: addNewTaskMutation, error } = useAddNewTask({
     boardId: currentBoardId,
@@ -57,24 +60,13 @@ export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
       })}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
-        if (task) {
-          updateTaskMutation(
-            { ...values, id: task.id },
-            {
-              onSuccess: () => {
-                onHideModal();
-                setSubmitting(false);
-              },
-            }
-          );
+        if (isNewTask) {
+          addNewTaskMutation(values);
         } else {
-          addNewTaskMutation(values, {
-            onSuccess: () => {
-              onHideModal();
-              setSubmitting(false);
-            },
-          });
+          updateTaskMutation({ ...values, id: task.id });
         }
+        onHideModal();
+        setSubmitting(false);
       }}
     >
       {({
