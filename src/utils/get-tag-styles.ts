@@ -1,26 +1,51 @@
+import { TAGS } from "../constants/task";
 import colors from "../styles/color";
 
-export default function getTagStyles({ tagName }: { tagName: string }) {
+export default function getTagStyles({
+  tagName,
+}: {
+  tagName: (typeof TAGS)[number];
+}) {
   switch (tagName) {
-    case "concept":
+    case "easy":
       return {
-        backgroundColor: colors.redLight,
-        textColor: colors.redPrimary,
+        backgroundColor: colors.yellowLight,
+        textColor: colors.yellowPrimary,
       };
-    case "technical":
+    case "medium":
       return {
         backgroundColor: colors.blueLight,
         textColor: colors.bluePrimary,
       };
-    case "design":
+    case "hard":
       return {
-        backgroundColor: colors.yellowLight,
-        textColor: colors.yellowPrimary,
+        backgroundColor: colors.redLight,
+        textColor: colors.redPrimary,
       };
     case "front-end":
       return {
         backgroundColor: colors.greenLight,
         textColor: colors.greenPrimary,
+      };
+    case "back-end":
+      return {
+        backgroundColor: colors.greenLight,
+        textColor: colors.greenPrimary,
+      };
+    case "write-code":
+      return {
+        backgroundColor: colors.blueLight,
+        textColor: colors.bluePrimary,
+      };
+    case "just-reading":
+      return {
+        backgroundColor: colors.logoPurple,
+        textColor: colors.slate900,
+      };
+    case "meeting":
+      return {
+        backgroundColor: colors.logoOrange,
+        textColor: colors.slate900,
       };
     default:
       return {

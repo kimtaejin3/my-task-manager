@@ -25,3 +25,14 @@ export const TASK_STATUS_CONFIG: Record<Status, TaskStatusConfig> = {
     title: "Completed",
   },
 } as const;
+
+export const TAGS = [
+  "easy",
+  "medium",
+  "hard",
+  "front-end",
+  "back-end",
+  "write-code",
+  "just-reading",
+  "meeting",
+] as const;

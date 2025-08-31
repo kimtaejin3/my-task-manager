@@ -1,5 +1,6 @@
 import { type Theme } from "@emotion/react";
 
+import { TAGS } from "../../constants/task";
 import getTagStyles from "../../utils/get-tag-styles";
 import Tag from "../shared/tag";
 import TagList from "../shared/tag-list";
@@ -18,6 +19,8 @@ export default function TagsField({
   selectedTags,
   onChange,
 }: TagsFieldProps) {
+  const isSelectedTagsEmpty = selectedTags.length === 0;
+
   const handleTagClick = (tag: string) => {
     if (selectedTags.includes(tag)) {
       onChange(selectedTags.filter((t) => t !== tag));
@@ -33,10 +36,14 @@ export default function TagsField({
       </Label>
       <Dropdown theme={theme}>
         <Dropdown.Header>
-          <TagList tags={selectedTags} />
+          {isSelectedTagsEmpty ? (
+            <>No tags selected</>
+          ) : (
+            <TagList tags={selectedTags} />
+          )}
         </Dropdown.Header>
         <Dropdown.List>
-          {["concept", "technical", "design", "front-end"].map((tag) => (
+          {TAGS.map((tag) => (
             <Dropdown.Item key={tag} onClick={() => handleTagClick(tag)}>
               <Tag name={tag} tagStyles={getTagStyles({ tagName: tag })} />
             </Dropdown.Item>
