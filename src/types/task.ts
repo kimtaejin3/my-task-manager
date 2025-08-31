@@ -1,3 +1,5 @@
+import type { TAGS } from "../constants/task";
+
 type Status = "backlog" | "in-progress" | "in-review" | "completed";
 
 type Task = {
@@ -6,11 +8,13 @@ type Task = {
   title: string;
   status: Status;
   background: string | null;
-  tags: string[];
+  tags: TAG[];
 };
 
 type TaskFormType = Omit<Task, "id">;
 
 type TasksByStatus = Record<Status, Task[]>;
 
-export type { Status, Task, TaskFormType, TasksByStatus };
+type TAG = (typeof TAGS)[number];
+
+export type { Status, Task, TaskFormType, TasksByStatus, TAG };

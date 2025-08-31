@@ -1,65 +1,61 @@
 import { type Theme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useField } from "formik";
 
 import { TASK_STATUS_CONFIG } from "../../constants/task";
 
 import Dropdown from "./dropdown";
+import FieldError from "./field-error";
 import Label from "./label";
 
 import type { Status } from "../../types/task";
-import type { Entries } from "../../types/utils";
 
 interface StatusFieldProps {
   theme: Theme;
-  selectedStatus: Status;
-  onChange: (status: Status) => void;
+  name: string;
+  error: {
+    showError: boolean;
+    errorMessage?: string;
+  };
 }
 
-export default function StatusField({
-  theme,
-  selectedStatus,
-  onChange,
-}: StatusFieldProps) {
+export default function StatusField({ theme, name, error }: StatusFieldProps) {
+  const [field, , helpers] = useField<Status>(name);
+
   return (
     <fieldset>
-      <Label id="taskStatusLabel" htmlFor="taskStatus">
+      <Label htmlFor={name} id={name}>
         Status
       </Label>
-
       <Dropdown theme={theme}>
-        <Dropdown.Header>
+        <Dropdown.Header name={name}>
           <>
             <S.StatusIndicator
-              color={TASK_STATUS_CONFIG[selectedStatus].color}
+              color={TASK_STATUS_CONFIG[field.value].color}
+              theme={theme}
             />
-            {TASK_STATUS_CONFIG[selectedStatus].title}
+            {TASK_STATUS_CONFIG[field.value].title}
           </>
         </Dropdown.Header>
         <Dropdown.List>
-          {(
-            Object.entries(TASK_STATUS_CONFIG) as Entries<
-              typeof TASK_STATUS_CONFIG
-            >
-          ).map(([key, { color, title }]) => (
+          {Object.entries(TASK_STATUS_CONFIG).map(([status, config]) => (
             <Dropdown.Item
-              key={key}
-              onClick={() => {
-                onChange(key);
-              }}
+              key={status}
+              onClick={() => helpers.setValue(status as Status)}
             >
-              <S.StatusIndicator color={color} />
-              {title}
+              <S.StatusIndicator color={config.color} theme={theme} />
+              {config.title}
             </Dropdown.Item>
           ))}
         </Dropdown.List>
       </Dropdown>
+      {error.showError && <FieldError errorMessage={error.errorMessage} />}
     </fieldset>
   );
 }
 
-// TODO: StatusIndicator 컴포넌트화
 const S = {
-  StatusIndicator: styled.div<{ color: string }>`
+  StatusIndicator: styled.div<{ color: string; theme: Theme }>`
     width: 12px;
     height: 12px;
     border-radius: 50%;

@@ -60,13 +60,19 @@ export const useDropdown = () => {
 
 Dropdown.Header = function DropdownHeader({
   children,
+  name,
 }: {
   children: React.ReactNode;
+  name: string;
 }) {
   const { isOpen, setIsOpen, theme } = useDropdown();
 
   return (
-    <S.DropdownHeader onClick={() => setIsOpen(!isOpen)} theme={theme}>
+    <S.DropdownHeader
+      onClick={() => setIsOpen(!isOpen)}
+      theme={theme}
+      name={name}
+    >
       {children}
     </S.DropdownHeader>
   );
@@ -113,13 +119,15 @@ const S = {
     user-select: none;
   `,
 
-  DropdownHeader: styled.div<{ theme: Theme }>`
+  DropdownHeader: styled.button<{ theme: Theme }>`
     display: flex;
     align-items: center;
     padding: 12px;
+    box-sizing: border-box;
     border: 2px solid ${(props) => props.theme.themeValue.tertiary};
     border-radius: 12px;
     cursor: pointer;
+    width: 100%;
     ${typography.bold14}
   `,
 

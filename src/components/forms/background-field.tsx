@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { type Theme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useField } from "formik";
 
 import colors from "../../styles/color";
 import typography from "../../styles/font";
@@ -9,15 +10,11 @@ import getRandomCover from "../../utils/get-random-cover";
 
 interface BackgroundFieldProps {
   theme: Theme;
-  background: string | null;
-  onChange: (background: string | null) => void;
+  name: string;
 }
 
-export default function BackgroundField({
-  theme,
-  background,
-  onChange,
-}: BackgroundFieldProps) {
+export default function BackgroundField({ theme, name }: BackgroundFieldProps) {
+  const [field, , helpers] = useField<string | null>(name);
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -32,17 +29,18 @@ export default function BackgroundField({
             <S.Button
               onClick={() => {
                 const randomCover = getRandomCover();
-                onChange(randomCover);
+                helpers.setValue(randomCover);
               }}
               type="button"
+              name={name}
               backgroundColor={colors.blue}
               hide={false}
             >
               Random cover
             </S.Button>
             <S.Button
-              onClick={() => onChange(null)}
-              hide={background === null}
+              onClick={() => helpers.setValue(null)}
+              hide={!field.value}
               type="button"
               backgroundColor={colors.red}
             >
@@ -50,8 +48,8 @@ export default function BackgroundField({
             </S.Button>
           </S.Overlay>
         )}
-        {background ? (
-          <img src={background} alt="" />
+        {field.value ? (
+          <img src={field.value} alt="" />
         ) : (
           <div>No cover photo</div>
         )}

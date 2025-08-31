@@ -4,8 +4,10 @@ import getTagStyles from "../../utils/get-tag-styles";
 
 import Tag from "./tag";
 
+import type { TAG } from "../../types/task";
+
 interface TagListProps {
-  tags: string[];
+  tags: TAG[];
 }
 
 export default function TagList({ tags }: TagListProps) {

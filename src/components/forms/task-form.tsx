@@ -1,6 +1,6 @@
-import { useState } from "react";
-
+import { Formik } from "formik";
 import { useAtomValue } from "jotai";
+import * as Yup from "yup";
 
 import useAddNewTask from "../../hooks/use-add-new-task";
 import { selectedBoardIdAtom } from "../../jotai/atom/board";
@@ -23,76 +23,99 @@ interface TaskFormProps {
   onHideModal: () => void;
 }
 
-const defaultFormData: TaskFormType = {
-  title: "",
-  background: null,
-  status: "backlog",
-  tags: [],
-  board_id: 0,
-};
-
 export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
-  const [formData, setFormData] = useState(
-    createFormData(task, defaultFormData)
-  );
-
-  // TODO: BoardId null 예외 처리를 어떻게 할지 , 그냥 빈문자열 주면 될지 모르겠음
   const currentBoardId = useAtomValue(selectedBoardIdAtom);
 
   const { mutate, error } = useAddNewTask({ boardId: currentBoardId });
 
   if (error) {
-    //TODO: 토스트 띄우기
     console.error("Error adding new task:", error);
   }
 
   return (
-    <Form
-      onSubmit={(e) => {
-        e.preventDefault();
-        mutate({
-          ...formData,
-          //에러처리를 했기 때문에 있다고 가정
-          board_id: currentBoardId!,
+    <Formik
+      initialValues={createFormData({
+        task,
+        defaultFormData: {
+          title: "",
+          background: null,
+          status: "backlog",
+          tags: [],
+          board_id: 0,
+        },
+      })}
+      validationSchema={Yup.object({
+        title: Yup.string().required("Required"),
+        status: Yup.string().required("Required"),
+        tags: Yup.array().min(1, "At least one tag is required"),
+      })}
+      onSubmit={(values, { setSubmitting }) => {
+        setSubmitting(true);
+        mutate(values, {
+          onSuccess: () => {
+            onHideModal();
+            setSubmitting(false);
+          },
         });
-        onHideModal();
       }}
     >
-      <BackgroundField
-        theme={theme}
-        background={formData.background}
-        onChange={(background) => setFormData({ ...formData, background })}
-      />
-      <TaskTitleField
-        theme={theme}
-        value={formData.title}
-        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-      />
-      <StatusField
-        theme={theme}
-        selectedStatus={formData.status}
-        onChange={(status) => setFormData({ ...formData, status })}
-      />
-      <TagsField
-        theme={theme}
-        selectedTags={formData.tags}
-        onChange={(tags: string[]) => setFormData({ ...formData, tags })}
-      />
-
-      <FormButtons>
-        <FormSubmitButton>Save</FormSubmitButton>
-        <FormCancelButton theme={theme} onClick={onHideModal}>
-          Cancel
-        </FormCancelButton>
-      </FormButtons>
-    </Form>
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleSubmit,
+        handleBlur,
+        isSubmitting,
+      }) => (
+        <Form onSubmit={handleSubmit}>
+          <BackgroundField theme={theme} name="background" />
+          <TaskTitleField
+            theme={theme}
+            value={values.title}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            name="title"
+            error={{
+              showError: !!(errors.title && touched.title),
+              errorMessage: errors.title,
+            }}
+          />
+          <StatusField
+            theme={theme}
+            name="status"
+            error={{
+              showError: !!(errors.status && touched.status),
+              errorMessage: errors.status,
+            }}
+          />
+          <TagsField
+            theme={theme}
+            name="tags"
+            error={{
+              showError: !!(errors.tags && touched.tags),
+              errorMessage: errors.tags,
+            }}
+          />
+          <FormButtons>
+            <FormSubmitButton disabled={isSubmitting}>Save</FormSubmitButton>
+            <FormCancelButton theme={theme} onClick={onHideModal}>
+              Cancel
+            </FormCancelButton>
+          </FormButtons>
+        </Form>
+      )}
+    </Formik>
   );
 }
 
-const createFormData = (
-  task: Task | null,
-  defaultFormData: TaskFormType
-): TaskFormType => {
+const createFormData = ({
+  task,
+  defaultFormData,
+}: {
+  task: Task | null;
+  defaultFormData: TaskFormType;
+}): TaskFormType => {
   if (!task) return defaultFormData;
 
   return {

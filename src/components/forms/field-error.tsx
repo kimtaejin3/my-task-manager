@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 interface FieldErrorProps {
-  errorMessage: string | undefined;
+  errorMessage: string | string[] | undefined;
 }
 
 export default function FieldError({ errorMessage }: FieldErrorProps) {
