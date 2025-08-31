@@ -16,13 +16,6 @@ interface AddNewBoardFormProps {
   onHideModal: () => void;
 }
 
-const BoardSchema = Yup.object({
-  name: Yup.string()
-    .required("Required")
-    .max(50, "Name must be 50 characters or less"),
-  emoji: Yup.string().required("Required"),
-});
-
 export default function AddNewBoardForm({
   theme,
   onHideModal,
@@ -35,7 +28,12 @@ export default function AddNewBoardForm({
         name: "",
         emoji: "",
       }}
-      validationSchema={BoardSchema}
+      validationSchema={Yup.object({
+        name: Yup.string()
+          .required("Required")
+          .max(50, "Name must be 50 characters or less"),
+        emoji: Yup.string().required("Required"),
+      })}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
         mutate(values, {
