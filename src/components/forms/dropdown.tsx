@@ -70,6 +70,7 @@ Dropdown.Header = function DropdownHeader({
   return (
     <S.DropdownHeader
       onClick={() => setIsOpen(!isOpen)}
+      type="button"
       theme={theme}
       name={name}
     >

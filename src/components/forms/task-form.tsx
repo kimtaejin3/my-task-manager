@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai";
 import * as Yup from "yup";
 
 import useAddNewTask from "../../hooks/use-add-new-task";
+import useUpdateTask from "../../hooks/use-update-task";
 import { selectedBoardIdAtom } from "../../jotai/atom/board";
 
 import BackgroundField from "./background-field";
@@ -26,7 +27,12 @@ interface TaskFormProps {
 export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
   const currentBoardId = useAtomValue(selectedBoardIdAtom);
 
-  const { mutate, error } = useAddNewTask({ boardId: currentBoardId });
+  const { mutate: addNewTaskMutation, error } = useAddNewTask({
+    boardId: currentBoardId,
+  });
+  const { mutate: updateTaskMutation } = useUpdateTask({
+    boardId: currentBoardId,
+  });
 
   if (error) {
     console.error("Error adding new task:", error);
@@ -51,12 +57,24 @@ export default function TaskForm({ theme, task, onHideModal }: TaskFormProps) {
       })}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
-        mutate(values, {
-          onSuccess: () => {
-            onHideModal();
-            setSubmitting(false);
-          },
-        });
+        if (task) {
+          updateTaskMutation(
+            { ...values, id: task.id },
+            {
+              onSuccess: () => {
+                onHideModal();
+                setSubmitting(false);
+              },
+            }
+          );
+        } else {
+          addNewTaskMutation(values, {
+            onSuccess: () => {
+              onHideModal();
+              setSubmitting(false);
+            },
+          });
+        }
       }}
     >
       {({
