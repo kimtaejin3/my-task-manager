@@ -8,7 +8,8 @@ export const getTaskList = async ({ boardId }: { boardId: number | null }) => {
   const { data, error } = await supabase
     .from("task")
     .select("*")
-    .eq("board_id", boardId);
+    .eq("board_id", boardId)
+    .order("created_at", { ascending: false });
   if (error) throw error;
 
   return data as Task[];

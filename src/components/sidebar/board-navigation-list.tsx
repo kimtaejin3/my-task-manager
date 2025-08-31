@@ -37,11 +37,7 @@ function NavigationItem({ board, index }: { board: Board; index: number }) {
         onClick={() => {
           setSelectedBoardId(board.id);
         }}
-        left={
-          <S.EmojiContainer bgColor={board.color}>
-            {board.emoji}
-          </S.EmojiContainer>
-        }
+        left={<S.EmojiContainer>{board.emoji}</S.EmojiContainer>}
         center={<span>{board.name}</span>}
       />
     </S.NavigationItem>
@@ -61,10 +57,9 @@ const S = {
     border-radius: 99px;
   `,
 
-  EmojiContainer: styled.div<{ bgColor: string }>`
+  EmojiContainer: styled.div`
     width: 32px;
     height: 32px;
-    background-color: ${(props) => props.bgColor};
     border-radius: 50%;
     display: flex;
     justify-content: center;
