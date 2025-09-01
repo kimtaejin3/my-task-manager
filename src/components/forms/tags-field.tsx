@@ -39,13 +39,13 @@ export default function TagsField({ theme, name, error }: TagsFieldProps) {
         Tags
       </Label>
       <Dropdown theme={theme}>
-        <Dropdown.Header name={name}>
+        <Dropdown.Trigger name={name}>
           {isSelectedTagsEmpty ? (
             <>No tags selected</>
           ) : (
             <TagList tags={field.value} />
           )}
-        </Dropdown.Header>
+        </Dropdown.Trigger>
         <Dropdown.List>
           {TAGS.map((tag) => (
             <Dropdown.Item key={tag} onClick={() => handleTagClick(tag)}>

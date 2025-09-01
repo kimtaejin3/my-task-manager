@@ -58,7 +58,7 @@ export const useDropdown = () => {
   return context;
 };
 
-Dropdown.Header = function DropdownHeader({
+Dropdown.Trigger = function DropdownTrigger({
   children,
   name,
 }: {
@@ -68,14 +68,14 @@ Dropdown.Header = function DropdownHeader({
   const { isOpen, setIsOpen, theme } = useDropdown();
 
   return (
-    <S.DropdownHeader
+    <S.DropdownTrigger
       onClick={() => setIsOpen(!isOpen)}
       type="button"
       theme={theme}
       name={name}
     >
       {children}
-    </S.DropdownHeader>
+    </S.DropdownTrigger>
   );
 };
 
@@ -120,7 +120,7 @@ const S = {
     user-select: none;
   `,
 
-  DropdownHeader: styled.button<{ theme: Theme }>`
+  DropdownTrigger: styled.button<{ theme: Theme }>`
     display: flex;
     align-items: center;
     padding: 12px;

@@ -28,7 +28,7 @@ export default function StatusField({ theme, name, error }: StatusFieldProps) {
         Status
       </Label>
       <Dropdown theme={theme}>
-        <Dropdown.Header name={name}>
+        <Dropdown.Trigger name={name}>
           <>
             <S.StatusIndicator
               color={TASK_STATUS_CONFIG[field.value].color}
@@ -36,7 +36,7 @@ export default function StatusField({ theme, name, error }: StatusFieldProps) {
             />
             {TASK_STATUS_CONFIG[field.value].title}
           </>
-        </Dropdown.Header>
+        </Dropdown.Trigger>
         <Dropdown.List>
           {Object.entries(TASK_STATUS_CONFIG).map(([status, config]) => (
             <Dropdown.Item
